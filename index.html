@@ -28696,27 +28696,15 @@ function applySort(rows, scope){
 /* ============ 0. 售卖倒计时 ============ */
 function buildCountdown(){
   const c = DATA.countdown, s = DATA.summary;
-  const shortfall = c.needed_per_day - c.daily_avg;
   return `<div class="card">
     <h2><span class="bar"></span>售卖倒计时</h2>
-    <p class="hint">按 ${DATA.meta.final_date} 为最终售卖日计算；「需日均」= 剩余缺口 ÷ 剩余天数</p>
+    <p class="hint">按 ${DATA.meta.final_date} 为最终售卖日计算；「需日均」「缺口」等明细见下方「整体情况」</p>
     <div class="cd">
       <div class="cd-main"><span class="n">${c.days_left}</span><span class="u">天</span></div>
       <div class="cd-side">
         最终售卖日 <b>${c.final_date}</b>　·　今日 <b>${c.today}</b><br>
         剩余售卖天数 <b>${c.days_left}</b> 天　·　已售 <b>${fmt(s.oct_sales)}</b> 件 / 预测 <b>${fmt(s.total_predicted)}</b> 件
       </div>
-    </div>
-    <div class="kpis" style="margin-top:14px">
-      <div class="kpi"><div class="k">${c.daily_avg_label||'当前日均销量'}</div><div class="v">${c.daily_avg}</div>
-        <div class="d">最近一个自然月 已售 ÷ 已过天数</div></div>
-      <div class="kpi"><div class="k">剩余缺口</div><div class="v">${fmt(c.gap)}</div>
-        <div class="d">预测 − 已售</div></div>
-      <div class="kpi warn"><div class="k">达成需日均</div><div class="v">${c.needed_per_day==null?"—":c.needed_per_day}</div>
-        <div class="d">缺口 ÷ 剩余 ${c.days_left} 天</div></div>
-      <div class="kpi ${shortfall>0?'warn':'good'}"><div class="k">日均缺口</div>
-        <div class="v">${shortfall>0?"+":""}${Math.round(shortfall*10)/10}</div>
-        <div class="d">需日均 − 当前日均</div></div>
     </div>
   </div>`;
 }
