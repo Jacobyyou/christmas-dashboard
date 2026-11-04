@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-11-04 17:21",
+ "generated_at": "2026-11-04 17:54",
  "meta": {
   "category": "圣诞树",
   "inventory_date": "2026-09-30",
@@ -24374,11 +24374,11 @@
  ],
  "legacy": {
   "enabled": true,
-  "sku_count": 33,
+  "sku_count": 32,
   "unique_sku": 30,
-  "init_total": 4909,
+  "init_total": 4911,
   "sales_total": 2813,
-  "remaining": 2096,
+  "remaining": 2098,
   "uk_sales": 428,
   "eu_sales": 2384,
   "sep_sales": 661,
@@ -27934,9 +27934,10 @@
    {
     "sku": "FTSDHD-1006-E",
     "region": "EU",
-    "init": 834,
+    "init": 860,
+    "stock": 191,
     "sales": 669,
-    "remaining": 165,
+    "remaining": 191,
     "by_platform": {
      "AM": 643,
      "Cdiscount": 4,
@@ -27949,9 +27950,10 @@
    {
     "sku": "FTSDHD-1005-E",
     "region": "EU",
-    "init": 382,
+    "init": 383,
+    "stock": 44,
     "sales": 339,
-    "remaining": 43,
+    "remaining": 44,
     "by_platform": {
      "AM": 299,
      "Kaufland": 7,
@@ -27965,9 +27967,10 @@
    {
     "sku": "FTSDHD-1006-E",
     "region": "UK",
-    "init": 620,
+    "init": 633,
+    "stock": 350,
     "sales": 283,
-    "remaining": 337,
+    "remaining": 350,
     "by_platform": {
      "AM": 241,
      "SHEIN": 7,
@@ -27978,9 +27981,10 @@
    {
     "sku": "FTSDCT-0002-E",
     "region": "EU",
-    "init": 346,
+    "init": 341,
+    "stock": 98,
     "sales": 243,
-    "remaining": 103,
+    "remaining": 98,
     "by_platform": {
      "Allegro": 71,
      "AM": 82,
@@ -27994,9 +27998,10 @@
    {
     "sku": "FTSDHD-1005-E",
     "region": "UK",
-    "init": 453,
+    "init": 457,
+    "stock": 341,
     "sales": 116,
-    "remaining": 337,
+    "remaining": 341,
     "by_platform": {
      "AM": 106,
      "WayFair": 7,
@@ -28007,9 +28012,10 @@
    {
     "sku": "FTSDCT-1014-DS",
     "region": "EU",
-    "init": 105,
+    "init": 104,
+    "stock": 0,
     "sales": 104,
-    "remaining": 1,
+    "remaining": 0,
     "by_platform": {
      "AM": 87,
      "Kaufland": 4,
@@ -28021,9 +28027,10 @@
    {
     "sku": "FTSDCT-2016-DS",
     "region": "EU",
-    "init": 126,
+    "init": 122,
+    "stock": 20,
     "sales": 102,
-    "remaining": 24,
+    "remaining": 20,
     "by_platform": {
      "SHEIN": 10,
      "LeroyMerlin": 1,
@@ -28036,9 +28043,10 @@
    {
     "sku": "FTSDCT-0001-E",
     "region": "EU",
-    "init": 265,
+    "init": 261,
+    "stock": 162,
     "sales": 99,
-    "remaining": 166,
+    "remaining": 162,
     "by_platform": {
      "AM": 72,
      "Allegro": 17,
@@ -28051,9 +28059,10 @@
    {
     "sku": "FTSDCT-4007-DS",
     "region": "EU",
-    "init": 124,
+    "init": 125,
+    "stock": 31,
     "sales": 94,
-    "remaining": 30,
+    "remaining": 31,
     "by_platform": {
      "Allegro": 17,
      "AM": 66,
@@ -28066,9 +28075,10 @@
    {
     "sku": "FTSDCT-4049-DS",
     "region": "EU",
-    "init": 84,
+    "init": 85,
+    "stock": 0,
     "sales": 85,
-    "remaining": -1,
+    "remaining": 0,
     "by_platform": {
      "AM": 52,
      "SHEIN": 32,
@@ -28080,6 +28090,7 @@
     "sku": "FTSDCT-2008-DS",
     "region": "EU",
     "init": 66,
+    "stock": 2,
     "sales": 64,
     "remaining": 2,
     "by_platform": {
@@ -28094,9 +28105,10 @@
    {
     "sku": "FTSDCT-0003-E",
     "region": "EU",
-    "init": 183,
+    "init": 180,
+    "stock": 120,
     "sales": 60,
-    "remaining": 123,
+    "remaining": 120,
     "by_platform": {
      "AM": 37,
      "LeroyMerlin": 1,
@@ -28111,6 +28123,7 @@
     "sku": "FTSDCT-2019-E",
     "region": "EU",
     "init": 51,
+    "stock": 0,
     "sales": 51,
     "remaining": 0,
     "by_platform": {
@@ -28124,9 +28137,10 @@
    {
     "sku": "FTSDCT-4047-DS",
     "region": "EU",
-    "init": 66,
+    "init": 63,
+    "stock": 14,
     "sales": 49,
-    "remaining": 17,
+    "remaining": 14,
     "by_platform": {
      "AM": 43,
      "SHEIN": 4,
@@ -28138,9 +28152,10 @@
    {
     "sku": "FTSDCT-4045-DS",
     "region": "EU",
-    "init": 63,
+    "init": 58,
+    "stock": 10,
     "sales": 48,
-    "remaining": 15,
+    "remaining": 10,
     "by_platform": {
      "Cdiscount": 7,
      "SHEIN": 30,
@@ -28154,6 +28169,7 @@
     "sku": "FTSDCT-1017-DS",
     "region": "EU",
     "init": 45,
+    "stock": 0,
     "sales": 45,
     "remaining": 0,
     "by_platform": {
@@ -28170,9 +28186,10 @@
    {
     "sku": "FTSDCT-4014-DS",
     "region": "EU",
-    "init": 71,
+    "init": 69,
+    "stock": 27,
     "sales": 42,
-    "remaining": 29,
+    "remaining": 27,
     "by_platform": {
      "TikTok": 4,
      "AM": 28,
@@ -28185,9 +28202,10 @@
    {
     "sku": "FTSDCT-4034-DS",
     "region": "EU",
-    "init": 128,
+    "init": 125,
+    "stock": 86,
     "sales": 39,
-    "remaining": 89,
+    "remaining": 86,
     "by_platform": {
      "Allegro": 2,
      "SHEIN": 11,
@@ -28201,9 +28219,10 @@
    {
     "sku": "FTSDCT-4036-DS",
     "region": "EU",
-    "init": 70,
+    "init": 69,
+    "stock": 31,
     "sales": 38,
-    "remaining": 32,
+    "remaining": 31,
     "by_platform": {
      "AM": 21,
      "SHEIN": 7,
@@ -28217,9 +28236,10 @@
    {
     "sku": "FTSDCT-4051-DS",
     "region": "EU",
-    "init": 153,
+    "init": 150,
+    "stock": 114,
     "sales": 36,
-    "remaining": 117,
+    "remaining": 114,
     "by_platform": {
      "SHEIN": 13,
      "Kaufland": 7,
@@ -28234,6 +28254,7 @@
     "sku": "FTSDCT-4031-DS",
     "region": "EU",
     "init": 34,
+    "stock": 0,
     "sales": 34,
     "remaining": 0,
     "by_platform": {
@@ -28247,9 +28268,10 @@
    {
     "sku": "FTSDCT-4012-DS",
     "region": "EU",
-    "init": 40,
+    "init": 38,
+    "stock": 5,
     "sales": 33,
-    "remaining": 7,
+    "remaining": 5,
     "by_platform": {
      "Allegro": 5,
      "Kaufland": 2,
@@ -28261,9 +28283,10 @@
    {
     "sku": "FTSDCT-4053-DS",
     "region": "EU",
-    "init": 313,
+    "init": 312,
+    "stock": 282,
     "sales": 30,
-    "remaining": 283,
+    "remaining": 282,
     "by_platform": {
      "AM": 25,
      "SHEIN": 1,
@@ -28277,9 +28300,10 @@
    {
     "sku": "FTSDHD-1004-E",
     "region": "UK",
-    "init": 26,
+    "init": 29,
+    "stock": 0,
     "sales": 29,
-    "remaining": -3,
+    "remaining": 0,
     "by_platform": {
      "SHEIN": 5,
      "AM": 24
@@ -28289,9 +28313,10 @@
    {
     "sku": "FTSDCT-1029-DS",
     "region": "EU",
-    "init": 56,
+    "init": 54,
+    "stock": 29,
     "sales": 25,
-    "remaining": 31,
+    "remaining": 29,
     "by_platform": {
      "AM": 9,
      "Allegro": 7,
@@ -28304,9 +28329,10 @@
    {
     "sku": "FTSDCT-4037-DS",
     "region": "EU",
-    "init": 19,
+    "init": 20,
+    "stock": 0,
     "sales": 20,
-    "remaining": -1,
+    "remaining": 0,
     "by_platform": {
      "AM": 17,
      "Allegro": 3
@@ -28316,9 +28342,10 @@
    {
     "sku": "FTSDCT-4043-DS",
     "region": "EU",
-    "init": 169,
+    "init": 162,
+    "stock": 142,
     "sales": 20,
-    "remaining": 149,
+    "remaining": 142,
     "by_platform": {
      "Kaufland": 4,
      "AM": 8,
@@ -28331,9 +28358,10 @@
    {
     "sku": "FTSDCT-3005-DS",
     "region": "EU",
-    "init": 12,
+    "init": 10,
+    "stock": 0,
     "sales": 10,
-    "remaining": 2,
+    "remaining": 0,
     "by_platform": {
      "TikTok": 2,
      "AM": 7,
@@ -28345,6 +28373,7 @@
     "sku": "FTSDCT-0004-E",
     "region": "EU",
     "init": 5,
+    "stock": 0,
     "sales": 5,
     "remaining": 0,
     "by_platform": {
@@ -28358,24 +28387,17 @@
     "sku": "HAHECF-6005-DS",
     "region": "EU",
     "init": 0,
+    "stock": 0,
     "sales": 1,
     "remaining": -1,
     "by_platform": {},
     "registered": false
    },
    {
-    "sku": "FTSDHD-1004-E",
-    "region": "EU",
-    "init": 0,
-    "sales": 0,
-    "remaining": 0,
-    "by_platform": {},
-    "registered": true
-   },
-   {
     "sku": "FTSDCT-3004-DS",
     "region": "UK",
     "init": 0,
+    "stock": 0,
     "sales": 0,
     "remaining": 0,
     "by_platform": {},
@@ -28385,13 +28407,14 @@
     "sku": "FTSDCT-2020-E",
     "region": "UK",
     "init": 0,
+    "stock": 0,
     "sales": 0,
     "remaining": 0,
     "by_platform": {},
     "registered": false
    }
   ],
-  "note": "总览表未登记的停产清仓 SKU：期初库存取自「旧库存」sheet，独立统计，不计入上方任何指标"
+  "note": "总览表未登记的停产清仓 SKU：期初 = 最新库存(快照) + 累计销量，独立统计，不计入上方任何指标；快照缺失者库存按 0 计"
  },
  "images": {
   "ID_08B3951ACF474DE9A821A3FD82A1607F": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAoHBwgHBgoICAgLCgoLDhgQDg0NDh0VFhEYIx8lJCIfIiEmKzcvJik0KSEiMEExNDk7Pj4+JS5ESUM8SDc9Pjv/2wBDAQoLCw4NDhwQEBw7KCIoOzs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozv/wAARCABfAGADASIAAhEBAxEB/8QAGwABAAIDAQEAAAAAAAAAAAAAAAYHAgQFAwH/xAAxEAACAgECBAYABQMFAAAAAAABAgADEQQhBQYSMRMiQVFhcRSBobHwBzLBJEJSkfH/xAAXAQEBAQEAAAAAAAAAAAAAAAAAAwIB/8QAHBEBAQEBAQADAQAAAAAAAAAAAAECESExQVFh/9oADAMBAAIRAxEAPwC5oiICIiAiJ56i9NPQ9znCqM7wPSJhVal1YdGBB9jmZwEREBERAREQEREBIXzPztTw7UX6BdO1qhCGcHfPrsRgiTJv7TjbaUrzte1vF9Y/SqujnOc9TKFxg5G2R64mdVnV8WVy3zAvE2GlTTsq11K3W1qE5Pp0r2+pIpUPINvhcbpZ0IrsTAQVszFsdwdyAPX3lujcRm9hm9j7ERNNEREBERAREwtTxKmXGcj3x+vpA43NmqNPB7akd67bVIrKn+7A3B+MSkuJ6ltRcQai3lzlwCQR3G+fXP5Sec5cT1teqr4dq2R3TpcFQesd+2Nu3rgfUh9tINLXFBZ0kgsSB8bgfUhrXqOtevblvVVrxKtz+IqUMWbpY19Qx3yMnH1Lq4fxDTayhTTZXkbdCncfEoyjVo9lmCvhqm9i5OPN2H7bf5lg8hULqltsp17LWj+epB0dZIznPf0+O31O5t7x3N94n8T4AFAA7CfZZUiIgIiICavEEvfT/wCnOHBzsTn+fc2pweYuJanQ1v4HhuBUXeu1guVH/D3Pwficvw5VXcw6mw8Stp8Vi4YqUXLOM9/MO+D29JG+jiCuG062M4PSyk46stnH6nM6XFOJXa3iviaKlUezfJQAKM9woGP4Z521OGvrqvY22dkBwFHbcD9+8h39Rt9YWdDOyKLBYoDGsKDj6A+u8k/LvELNPrKtQLFttWklckFqkyAcDbHf9fuRi5rtHffqU6gAELlcdIA749d/XPvNzgWorps/FOGYJhrEKgde+QD7+m35x/SL00WoOp062MvS3qMEfuBNic3g3EF12jrceCoKjCV2dZXbsTidKXi5EROhERA8dTYq1FTetLMPKxI2P5ysOdOJ8RHE0ouNDN0ZrdFGMZ2IOSQe+/tmWfqdNTrKGo1FYsrbupkd1v8AT/gmrta3otqc5INbY6e2MfAwf+zMalvwzqWqns0aWPihel0GOoNjAH8xNTxU0lT1VVks+7sRl2Psc+knV3InFaHbS8PFAN2bGLEqVXP+5ht1H2BPb2Eimo4DxDh2ssq1WmfTuwLlLHDFh6sPj6kuX7S5fto1UBtQWfy2MpyW7Y+fr5mz+Heq38Rbq/ID1BayOkbdwB9Tb0fB+JXW11V0HobIoNmwwPb1P/k71X9N9fdiy7yuUBBK9Sk9wp3yBnvtHO0k66HK3Ga61VGAyrr4dSoQW2x1Fs4A+AN5YtbFq1Zhgkbjf/MhXL/JWt4fpwb7aksBGQAGJx7NvgH6ztJsidCBcscerHJlcSyK56yiIm2iIiAiIgeeouTT6ey+zPRWhdsd8AZkas5e1HEuGW0uU03i0sigoCwJXHU7DDMc7nsPuSmIEWt5aTR6YWVUqz11jrVVGHIAyV2yjHHyPj1kmpsW6lLUz0uoYZ9jM4gIiICIiB//2Q==",
