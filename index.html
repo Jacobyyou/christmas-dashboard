@@ -86,6 +86,18 @@
   .loading{padding:40px;text-align:center;color:var(--muted)}
   .sect-note{font-size:11.5px;color:var(--muted);margin-top:8px}
 
+  /* 各 SKU 销量/库存对比 · 按站点分两张表 */
+  .ss-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:6px}
+  .ss-block{border:1px solid var(--line);border-radius:12px;overflow:hidden;min-width:0}
+  .ss-h{padding:11px 14px;font-weight:700;font-size:14px;border-bottom:1px solid var(--line);background:var(--bg2);display:flex;align-items:center;gap:8px}
+  .ss-h.uk{color:var(--uk)} .ss-h.eu{color:var(--eu)}
+  .ss-block .tbl-wrap{border:none;border-radius:0;max-height:560px}
+  .cmpbar{display:flex;align-items:center;gap:2px;width:100%;min-width:140px;height:18px;background:var(--bg2);
+    border-radius:6px;overflow:hidden;border:1px solid var(--line);box-sizing:border-box}
+  .cmpbar .sold{height:100%;border-radius:5px 0 0 5px;min-width:0}
+  .cmpbar .rem{height:100%;background:var(--card2);border-left:1px solid var(--line2);box-sizing:border-box;min-width:0}
+  @media(max-width:900px){.ss-grid{grid-template-columns:1fr}}
+
   /* 倒计时 */
   .cd{display:flex;align-items:center;gap:26px;flex-wrap:wrap}
   .cd-main{display:flex;align-items:baseline;gap:8px;
@@ -28570,11 +28582,11 @@ const EMBEDDED_DATA = {
 let dailyPlat = "ALL";
 let dailySku  = "ALL";
 let legacySku = "ALL";
-let skuSiteSort = "total";          // 新图排序：total / uk / eu / sku
+// 各 SKU 销量/库存对比：按站点拆成 UK / EU 两张表，排序状态存于 SORTS.skusite_uk / skusite_eu
 let detailState = {site:"ALL", plat:"ALL", q:""};
 let legacyState = {q:""};
 // 明细排序状态：key=列键（平台列为 "P::平台名"），dir=1 升序 / -1 降序；key 为 null 表示按原始顺序
-const SORTS = {detail:{key:null, dir:-1}, legacy:{key:null, dir:-1}};
+const SORTS = {detail:{key:null, dir:-1}, legacy:{key:null, dir:-1}, skusite_uk:{key:null, dir:-1}, skusite_eu:{key:null, dir:-1}};
 let ATTS = [];                       // 品类属性（来自 DATA.meta.attributes），renderAll 时赋值
 let SM = "10月", PM = "9月";        // 统计月 / 上月标签（来自 config）
 function isTextKey(k){
@@ -28632,7 +28644,9 @@ function setSort(scope, key){
   const st = SORTS[scope];
   if(st.key === key) st.dir = -st.dir;                 // 同列再点：切换升/降
   else { st.key = key; st.dir = isTextKey(key) ? 1 : -1; }  // 文本列默认升序，数值列默认降序
-  (scope === "detail" ? fillDetail : fillLegacy)();
+  if(scope === "detail") fillDetail();
+  else if(scope === "legacy") fillLegacy();
+  else fillSkuSite();                                 // skusite_uk / skusite_eu
 }
 function sortTh(scope, key, label, cls){
   const st = SORTS[scope];
@@ -28794,102 +28808,76 @@ function buildCompletion(){
 
 /* ============ 4.5 各 SKU 销量 / 库存对比（横向条形图） ============ */
 function buildSkuSite(){
-  const o = (v,t)=>`<option value="${v}" ${skuSiteSort===v?'selected':''}>${t}</option>`;
-  const opts = o("total","按销量↓") + o("rate","按销售率↓") + o("remaining","按剩余库存↓")
-             + o("uk","按 UK↓") + o("eu","按 EU↓") + o("sku","按 SKU 名");
   return `<div class="card">
     <h2><span class="bar"></span>各 SKU 销量 / 库存对比（销售情况）</h2>
-    <p class="hint">横向条形图：每一行 = 一个 SKU。<b>实心段 = ${SM}销量</b>，<b>空心段 = 剩余库存</b>，整条长度 = 期初库存，
-      一眼看出卖了多少、还剩多少。右侧为销量、剩余库存与<b>销售率（销量 ÷ 期初库存）</b>。</p>
-    <div class="controls">
-      <label>排序</label>
-      <select id="ss-sort" onchange="skuSiteSort=this.value;fillSkuSite()">${opts}</select>
-      <span class="sect-note">销量 + 剩余库存 = 期初库存</span>
+    <p class="hint">按站点拆分为 <b style="color:var(--uk)">UK</b> 与 <b style="color:var(--eu)">EU</b> 两张表。每行 = 一个 SKU：<b>销量</b>、<b>剩余库存</b>、<b>销售率（销量 ÷ 期初库存）</b>；「对比」列以条形直观展示销量(实心)与剩余库存(空心)，二者相加 = 期初库存。点击任意表头即可排序。</p>
+    <div class="ss-grid">
+      <div class="ss-block">
+        <div class="ss-h uk"><span class="tag uk">UK</span>站点 · 各 SKU 销量 / 库存对比</div>
+        <div class="tbl-wrap"><table>${ssHead("skusite_uk")}<tbody id="ss-uk-body"></tbody><tfoot id="ss-uk-foot"></tfoot></table></div>
+      </div>
+      <div class="ss-block">
+        <div class="ss-h eu"><span class="tag eu">EU</span>站点 · 各 SKU 销量 / 库存对比</div>
+        <div class="tbl-wrap"><table>${ssHead("skusite_eu")}<tbody id="ss-eu-body"></tbody><tfoot id="ss-eu-foot"></tfoot></table></div>
+      </div>
     </div>
-    <div id="skusite-chart"></div>
   </div>`;
 }
+function ssHead(scope){
+  return `<thead><tr>
+    ${sortTh(scope,"sku","SKU","l")}
+    ${sortTh(scope,"name","名称","l")}
+    ${sortTh(scope,"init","期初库存")}
+    ${sortTh(scope,"total_sales","销量")}
+    ${sortTh(scope,"remaining","剩余库存")}
+    ${sortTh(scope,"rate","销售率")}
+    <th class="l">对比（销量 / 剩余库存）</th>
+  </tr></thead>`;
+}
 function fillSkuSite(){
-  const agg = {};
-  DATA.sku_detail.forEach(r=>{
-    const a = agg[r.sku] || (agg[r.sku] = {sku:r.sku, uk:0, eu:0, total:0, init:0, remaining:0});
-    if(r.site==="UK") a.uk += r.total_sales;
-    else if(r.site==="EU") a.eu += r.total_sales;
-    a.total += r.total_sales;
-    a.init += r.init;
-    a.remaining += r.remaining;
-  });
-  const items = Object.values(agg).map(x=>({
-    ...x, rate: x.init>0 ? (x.total/x.init*100) : 0
+  fillSkuSiteTable("skusite_uk", "UK", C.uk, "ss-uk-body", "ss-uk-foot");
+  fillSkuSiteTable("skusite_eu", "EU", C.eu, "ss-eu-body", "ss-eu-foot");
+}
+function fillSkuSiteTable(scope, site, color, bodyId, footId){
+  const rows = DATA.sku_detail.filter(r=>r.site===site).map(r=>({
+    sku:r.sku, name:r.name, init:r.init, total_sales:r.total_sales,
+    remaining:r.remaining,
+    rate: r.init>0 ? +(r.total_sales/r.init*100).toFixed(1) : 0
   }));
-  const bySku = (a,b)=>String(a.sku).localeCompare(String(b.sku),"zh-CN",{numeric:true});
-  if(skuSiteSort==="sku")            items.sort(bySku);
-  else if(skuSiteSort==="uk")        items.sort((a,b)=>b.uk-a.uk || bySku(a,b));
-  else if(skuSiteSort==="eu")        items.sort((a,b)=>b.eu-a.eu || bySku(a,b));
-  else if(skuSiteSort==="remaining") items.sort((a,b)=>b.remaining-a.remaining || bySku(a,b));
-  else if(skuSiteSort==="rate")      items.sort((a,b)=>b.rate-a.rate || bySku(a,b));
-  else                               items.sort((a,b)=>b.total-a.total || bySku(a,b));
-  const el = document.getElementById("skusite-chart");
-  if(el) el.innerHTML = skuSiteChart(items);
-}
-function skuSiteChart(items){
-  if(!items.length) return "<p class='hint'>暂无数据</p>";
-  const n = items.length;
-  const rowH = 34, barH = 18;
-  const padL = 176, padR = 172, padT = 34, padB = 34;
-  const W = 1100;
-  const H = padT + n*rowH + padB;
-  const iw = W - padL - padR;
-  // 整条 = 期初库存（= 销量 + 剩余库存）
-  const peak = Math.max(1, ...items.map(x=>x.init));
-  const raw = peak/5;
-  const mag = Math.pow(10, Math.floor(Math.log10(raw)));
-  const step = [1,2,5,10].map(m=>m*mag).find(s=>s>=raw) || mag*10;
-  const maxV = Math.ceil(peak/step)*step;
-  const X = v => padL + iw*v/maxV;
-  const rowY = i => padT + i*rowH;
-  const bottom = padT + n*rowH;
-
-  let grid="";
-  for(let v=0; v<=maxV+0.001; v+=step){
-    const xx=X(v);
-    grid+=`<line x1="${xx}" y1="${padT-8}" x2="${xx}" y2="${bottom+6}" stroke="var(--grid)" stroke-width="1"/>`;
-    grid+=`<text x="${xx}" y="${padT-14}" fill="var(--muted)" font-size="11" text-anchor="middle">${fmt(Math.round(v))}</text>`;
-    grid+=`<text x="${xx}" y="${bottom+22}" fill="var(--muted)" font-size="11" text-anchor="middle">${fmt(Math.round(v))}</text>`;
-  }
-  grid+=`<line x1="${padL}" y1="${bottom+6}" x2="${W-padR}" y2="${bottom+6}" stroke="var(--line2)" stroke-width="1"/>`;
-
-  let rows="";
-  items.forEach((it,i)=>{
-    const yy = rowY(i) + (rowH-barH)/2;
-    const wS = Math.max(0, X(it.total) - padL);        // 销量段
-    const wR = Math.max(0, X(it.remaining) - padL);    // 剩余库存段
-    const tip = `${it.sku} · 销量 ${it.total} · 剩余库存 ${it.remaining} · 期初 ${it.init} · 销售率 ${it.rate.toFixed(1)}%`;
-    // SKU 名（左）
-    rows+=`<text x="${padL-12}" y="${rowY(i)+rowH/2+4}" fill="var(--txt)" font-size="12" text-anchor="end">${it.sku}</text>`;
-    // 销量（实心）
-    if(wS>0) rows+=`<rect x="${padL}" y="${yy}" width="${wS}" height="${barH}" fill="${C.uk}" rx="2"><title>${tip}</title></rect>`;
-    // 剩余库存（空心描边，接在销量后）
-    if(wR>0) rows+=`<rect x="${padL+wS}" y="${yy}" width="${wR}" height="${barH}" fill="var(--card2)" stroke="var(--line2)" stroke-width="1" rx="2"><title>${tip}</title></rect>`;
-    // 条内数值（销量够长才放得下）
-    if(wS>58) rows+=`<text x="${padL+wS-6}" y="${rowY(i)+rowH/2+4}" fill="#fff" font-size="11" text-anchor="end" font-weight="600">${fmt(it.total)}</text>`;
-    // 右侧数值
-    const tx = padL + wS + wR + 12;
-    rows+=`<text x="${tx}" y="${rowY(i)+rowH/2-2}" fill="var(--muted)" font-size="11">销 ${fmt(it.total)} · 存 ${fmt(it.remaining)}</text>`;
-    const rc = it.rate>=50 ? "var(--green)" : (it.rate>=20 ? "var(--accent)" : "var(--muted)");
-    rows+=`<text x="${tx}" y="${rowY(i)+rowH/2+12}" fill="${rc}" font-size="11.5" font-weight="700">${it.rate.toFixed(1)}%</text>`;
+  const sorted = applySort(rows, scope);
+  let body="";
+  sorted.forEach(x=>{
+    const sp = Math.min(100, x.rate);            // 销量占比（相对期初库存）
+    const rp = Math.max(0, 100 - x.rate);        // 剩余库存占比
+    const rc = x.rate>=50 ? "var(--green)" : (x.rate>=20 ? "var(--accent)" : "var(--muted)");
+    body += `<tr>
+      <td class="l"><b>${esc(x.sku)}</b></td>
+      <td class="l">${esc(x.name)}</td>
+      <td>${fmt(x.init)}</td>
+      <td>${fmt(x.total_sales)}</td>
+      <td>${fmt(x.remaining)}</td>
+      <td style="color:${rc};font-weight:700">${x.rate.toFixed(1)}%</td>
+      <td class="l"><div class="cmpbar" title="销量 ${fmt(x.total_sales)} · 剩余库存 ${fmt(x.remaining)} · 期初 ${fmt(x.init)}">
+        <span class="sold" style="width:${sp.toFixed(2)}%;background:${color}"></span>
+        <span class="rem" style="width:${rp.toFixed(2)}%"></span>
+      </div></td>
+    </tr>`;
   });
-
-  const totS = items.reduce((s,x)=>s+x.total,0);
-  const totI = items.reduce((s,x)=>s+x.init,0);
-  const totR = items.reduce((s,x)=>s+x.remaining,0);
-  const avgRate = totI>0 ? (totS/totI*100) : 0;
-  const legend = `<div class="legend">
-    <span><i style="background:${C.uk}"></i>${SM}销量</span>
-    <span><i style="background:var(--card2);border:1px solid var(--line2)"></i>剩余库存</span>
-    <span style="margin-left:auto">共 ${n} 个 SKU · 合计 销 ${fmt(totS)} / 期初 ${fmt(totI)} / 存 ${fmt(totR)} · 整体销售率 <b style="color:var(--accent)">${avgRate.toFixed(1)}%</b></span></div>`;
-  return legend + `<div style="overflow-x:auto"><svg viewBox="0 0 ${W} ${H}" width="${W}" style="display:block">${grid}${rows}</svg></div>`;
+  const totS = sorted.reduce((s,x)=>s+x.total_sales,0);
+  const totI = sorted.reduce((s,x)=>s+x.init,0);
+  const totR = sorted.reduce((s,x)=>s+x.remaining,0);
+  const avg = totI>0 ? (totS/totI*100) : 0;
+  const foot = `<tr>
+    <td class="l" colspan="2">合计 ${sorted.length} 个 SKU</td>
+    <td>${fmt(totI)}</td><td>${fmt(totS)}</td><td>${fmt(totR)}</td>
+    <td style="color:var(--accent);font-weight:700">${avg.toFixed(1)}%</td>
+    <td class="l"></td>
+  </tr>`;
+  const b=document.getElementById(bodyId), f=document.getElementById(footId);
+  if(b) b.innerHTML=body; if(f) f.innerHTML=foot;
 }
+
+
 
 /* ============ 5. SKU 销量明细 ============ */
 function buildDetail(){
