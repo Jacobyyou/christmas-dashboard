@@ -28734,9 +28734,9 @@ function buildSummary(){
         <div class="d">期初 − ${SM}累计销量</div></div>
       <div class="kpi"><div class="k">${c.daily_avg_label||'当前日均销量'}</div><div class="v">${c.daily_avg}</div>
         <div class="d">最近一个自然月 已售 ÷ 已过天数</div></div>
-      <div class="kpi warn"><div class="k">达成需日均</div><div class="v">${c.needed_per_day==null?"—":c.needed_per_day}</div>
+      <div class="kpi warn"><div class="k">需要的日均</div><div class="v">${c.needed_per_day==null?"—":c.needed_per_day}</div>
         <div class="d">缺口 ÷ 剩余 ${c.days_left} 天</div></div>
-      <div class="kpi ${ (c.needed_per_day - c.daily_avg)>0?'warn':'good' }"><div class="k">剩余缺口</div><div class="v">${fmt(c.gap)}</div>
+      <div class="kpi ${ (c.needed_per_day - c.daily_avg)>0?'warn':'good' }"><div class="k">缺口</div><div class="v">${fmt(c.gap)}</div>
         <div class="d">预测 − 已售</div></div>
     </div>
   </div>`;
