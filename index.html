@@ -147,10 +147,10 @@
   <div id="app"><div class="loading">数据加载中…</div></div>
 
   <footer>
-    <b>口径说明：</b>库存快照为 9.30（总库存），预测为总览表「各平台预测数量」，销量统计 2026-10-01 起的日订单（与库存/预测一一对应）。
+    <b>口径说明：</b>库存快照取最新实际盘点（库存11.4），期初库存按「最新库存 + 累计销量」反推；预测为总览表「各平台预测数量」，销量统计 2026-10-01 起的日订单（与库存/预测一一对应）。
     站点划分：销量明细国家代码 UK/GB→UK，其余(DE/FR/IT/PL/ES 等)→EU；平台 Amazon 记为 AM。
     <br><b>9 月销量：</b>早于库存快照，柱状图首根柱子单独展示，不计入完成率与剩余库存。
-    <br><b>剩余库存：</b>= 期初库存(9.30) − 统计期累计销量。
+    <br><b>剩余库存：</b>= 期初库存 − 累计销量 = 最新库存快照（期初按最新库存反推：期初 = 最新库存 + 累计销量）。
     <br><b>清仓口径：</b>总览表未登记的 SKU（若启用停产清仓模块）已单独隔离在最下方，独立成图成表，不计入上方任何指标。
     <br><b>更新方式：</b>本页为<b>实时版</b>，数据与页面分离存放；每次打开、切回标签页或每 5 分钟自动拉取最新数据，网址始终不变。
   </footer>
@@ -159,7 +159,7 @@
 <script>
 let DATA = null;
 const EMBEDDED_DATA = {
- "generated_at": "2026-11-04 17:21",
+ "generated_at": "2026-11-04 17:54",
  "meta": {
   "category": "圣诞树",
   "inventory_date": "2026-09-30",
@@ -24534,11 +24534,11 @@ const EMBEDDED_DATA = {
  ],
  "legacy": {
   "enabled": true,
-  "sku_count": 33,
+  "sku_count": 32,
   "unique_sku": 30,
-  "init_total": 4909,
+  "init_total": 4911,
   "sales_total": 2813,
-  "remaining": 2096,
+  "remaining": 2098,
   "uk_sales": 428,
   "eu_sales": 2384,
   "sep_sales": 661,
@@ -28094,9 +28094,10 @@ const EMBEDDED_DATA = {
    {
     "sku": "FTSDHD-1006-E",
     "region": "EU",
-    "init": 834,
+    "init": 860,
+    "stock": 191,
     "sales": 669,
-    "remaining": 165,
+    "remaining": 191,
     "by_platform": {
      "AM": 643,
      "Cdiscount": 4,
@@ -28109,9 +28110,10 @@ const EMBEDDED_DATA = {
    {
     "sku": "FTSDHD-1005-E",
     "region": "EU",
-    "init": 382,
+    "init": 383,
+    "stock": 44,
     "sales": 339,
-    "remaining": 43,
+    "remaining": 44,
     "by_platform": {
      "AM": 299,
      "Kaufland": 7,
@@ -28125,9 +28127,10 @@ const EMBEDDED_DATA = {
    {
     "sku": "FTSDHD-1006-E",
     "region": "UK",
-    "init": 620,
+    "init": 633,
+    "stock": 350,
     "sales": 283,
-    "remaining": 337,
+    "remaining": 350,
     "by_platform": {
      "AM": 241,
      "SHEIN": 7,
@@ -28138,9 +28141,10 @@ const EMBEDDED_DATA = {
    {
     "sku": "FTSDCT-0002-E",
     "region": "EU",
-    "init": 346,
+    "init": 341,
+    "stock": 98,
     "sales": 243,
-    "remaining": 103,
+    "remaining": 98,
     "by_platform": {
      "Allegro": 71,
      "AM": 82,
@@ -28154,9 +28158,10 @@ const EMBEDDED_DATA = {
    {
     "sku": "FTSDHD-1005-E",
     "region": "UK",
-    "init": 453,
+    "init": 457,
+    "stock": 341,
     "sales": 116,
-    "remaining": 337,
+    "remaining": 341,
     "by_platform": {
      "AM": 106,
      "WayFair": 7,
@@ -28167,9 +28172,10 @@ const EMBEDDED_DATA = {
    {
     "sku": "FTSDCT-1014-DS",
     "region": "EU",
-    "init": 105,
+    "init": 104,
+    "stock": 0,
     "sales": 104,
-    "remaining": 1,
+    "remaining": 0,
     "by_platform": {
      "AM": 87,
      "Kaufland": 4,
@@ -28181,9 +28187,10 @@ const EMBEDDED_DATA = {
    {
     "sku": "FTSDCT-2016-DS",
     "region": "EU",
-    "init": 126,
+    "init": 122,
+    "stock": 20,
     "sales": 102,
-    "remaining": 24,
+    "remaining": 20,
     "by_platform": {
      "SHEIN": 10,
      "LeroyMerlin": 1,
@@ -28196,9 +28203,10 @@ const EMBEDDED_DATA = {
    {
     "sku": "FTSDCT-0001-E",
     "region": "EU",
-    "init": 265,
+    "init": 261,
+    "stock": 162,
     "sales": 99,
-    "remaining": 166,
+    "remaining": 162,
     "by_platform": {
      "AM": 72,
      "Allegro": 17,
@@ -28211,9 +28219,10 @@ const EMBEDDED_DATA = {
    {
     "sku": "FTSDCT-4007-DS",
     "region": "EU",
-    "init": 124,
+    "init": 125,
+    "stock": 31,
     "sales": 94,
-    "remaining": 30,
+    "remaining": 31,
     "by_platform": {
      "Allegro": 17,
      "AM": 66,
@@ -28226,9 +28235,10 @@ const EMBEDDED_DATA = {
    {
     "sku": "FTSDCT-4049-DS",
     "region": "EU",
-    "init": 84,
+    "init": 85,
+    "stock": 0,
     "sales": 85,
-    "remaining": -1,
+    "remaining": 0,
     "by_platform": {
      "AM": 52,
      "SHEIN": 32,
@@ -28240,6 +28250,7 @@ const EMBEDDED_DATA = {
     "sku": "FTSDCT-2008-DS",
     "region": "EU",
     "init": 66,
+    "stock": 2,
     "sales": 64,
     "remaining": 2,
     "by_platform": {
@@ -28254,9 +28265,10 @@ const EMBEDDED_DATA = {
    {
     "sku": "FTSDCT-0003-E",
     "region": "EU",
-    "init": 183,
+    "init": 180,
+    "stock": 120,
     "sales": 60,
-    "remaining": 123,
+    "remaining": 120,
     "by_platform": {
      "AM": 37,
      "LeroyMerlin": 1,
@@ -28271,6 +28283,7 @@ const EMBEDDED_DATA = {
     "sku": "FTSDCT-2019-E",
     "region": "EU",
     "init": 51,
+    "stock": 0,
     "sales": 51,
     "remaining": 0,
     "by_platform": {
@@ -28284,9 +28297,10 @@ const EMBEDDED_DATA = {
    {
     "sku": "FTSDCT-4047-DS",
     "region": "EU",
-    "init": 66,
+    "init": 63,
+    "stock": 14,
     "sales": 49,
-    "remaining": 17,
+    "remaining": 14,
     "by_platform": {
      "AM": 43,
      "SHEIN": 4,
@@ -28298,9 +28312,10 @@ const EMBEDDED_DATA = {
    {
     "sku": "FTSDCT-4045-DS",
     "region": "EU",
-    "init": 63,
+    "init": 58,
+    "stock": 10,
     "sales": 48,
-    "remaining": 15,
+    "remaining": 10,
     "by_platform": {
      "Cdiscount": 7,
      "SHEIN": 30,
@@ -28314,6 +28329,7 @@ const EMBEDDED_DATA = {
     "sku": "FTSDCT-1017-DS",
     "region": "EU",
     "init": 45,
+    "stock": 0,
     "sales": 45,
     "remaining": 0,
     "by_platform": {
@@ -28330,9 +28346,10 @@ const EMBEDDED_DATA = {
    {
     "sku": "FTSDCT-4014-DS",
     "region": "EU",
-    "init": 71,
+    "init": 69,
+    "stock": 27,
     "sales": 42,
-    "remaining": 29,
+    "remaining": 27,
     "by_platform": {
      "TikTok": 4,
      "AM": 28,
@@ -28345,9 +28362,10 @@ const EMBEDDED_DATA = {
    {
     "sku": "FTSDCT-4034-DS",
     "region": "EU",
-    "init": 128,
+    "init": 125,
+    "stock": 86,
     "sales": 39,
-    "remaining": 89,
+    "remaining": 86,
     "by_platform": {
      "Allegro": 2,
      "SHEIN": 11,
@@ -28361,9 +28379,10 @@ const EMBEDDED_DATA = {
    {
     "sku": "FTSDCT-4036-DS",
     "region": "EU",
-    "init": 70,
+    "init": 69,
+    "stock": 31,
     "sales": 38,
-    "remaining": 32,
+    "remaining": 31,
     "by_platform": {
      "AM": 21,
      "SHEIN": 7,
@@ -28377,9 +28396,10 @@ const EMBEDDED_DATA = {
    {
     "sku": "FTSDCT-4051-DS",
     "region": "EU",
-    "init": 153,
+    "init": 150,
+    "stock": 114,
     "sales": 36,
-    "remaining": 117,
+    "remaining": 114,
     "by_platform": {
      "SHEIN": 13,
      "Kaufland": 7,
@@ -28394,6 +28414,7 @@ const EMBEDDED_DATA = {
     "sku": "FTSDCT-4031-DS",
     "region": "EU",
     "init": 34,
+    "stock": 0,
     "sales": 34,
     "remaining": 0,
     "by_platform": {
@@ -28407,9 +28428,10 @@ const EMBEDDED_DATA = {
    {
     "sku": "FTSDCT-4012-DS",
     "region": "EU",
-    "init": 40,
+    "init": 38,
+    "stock": 5,
     "sales": 33,
-    "remaining": 7,
+    "remaining": 5,
     "by_platform": {
      "Allegro": 5,
      "Kaufland": 2,
@@ -28421,9 +28443,10 @@ const EMBEDDED_DATA = {
    {
     "sku": "FTSDCT-4053-DS",
     "region": "EU",
-    "init": 313,
+    "init": 312,
+    "stock": 282,
     "sales": 30,
-    "remaining": 283,
+    "remaining": 282,
     "by_platform": {
      "AM": 25,
      "SHEIN": 1,
@@ -28437,9 +28460,10 @@ const EMBEDDED_DATA = {
    {
     "sku": "FTSDHD-1004-E",
     "region": "UK",
-    "init": 26,
+    "init": 29,
+    "stock": 0,
     "sales": 29,
-    "remaining": -3,
+    "remaining": 0,
     "by_platform": {
      "SHEIN": 5,
      "AM": 24
@@ -28449,9 +28473,10 @@ const EMBEDDED_DATA = {
    {
     "sku": "FTSDCT-1029-DS",
     "region": "EU",
-    "init": 56,
+    "init": 54,
+    "stock": 29,
     "sales": 25,
-    "remaining": 31,
+    "remaining": 29,
     "by_platform": {
      "AM": 9,
      "Allegro": 7,
@@ -28464,9 +28489,10 @@ const EMBEDDED_DATA = {
    {
     "sku": "FTSDCT-4037-DS",
     "region": "EU",
-    "init": 19,
+    "init": 20,
+    "stock": 0,
     "sales": 20,
-    "remaining": -1,
+    "remaining": 0,
     "by_platform": {
      "AM": 17,
      "Allegro": 3
@@ -28476,9 +28502,10 @@ const EMBEDDED_DATA = {
    {
     "sku": "FTSDCT-4043-DS",
     "region": "EU",
-    "init": 169,
+    "init": 162,
+    "stock": 142,
     "sales": 20,
-    "remaining": 149,
+    "remaining": 142,
     "by_platform": {
      "Kaufland": 4,
      "AM": 8,
@@ -28491,9 +28518,10 @@ const EMBEDDED_DATA = {
    {
     "sku": "FTSDCT-3005-DS",
     "region": "EU",
-    "init": 12,
+    "init": 10,
+    "stock": 0,
     "sales": 10,
-    "remaining": 2,
+    "remaining": 0,
     "by_platform": {
      "TikTok": 2,
      "AM": 7,
@@ -28505,6 +28533,7 @@ const EMBEDDED_DATA = {
     "sku": "FTSDCT-0004-E",
     "region": "EU",
     "init": 5,
+    "stock": 0,
     "sales": 5,
     "remaining": 0,
     "by_platform": {
@@ -28518,24 +28547,17 @@ const EMBEDDED_DATA = {
     "sku": "HAHECF-6005-DS",
     "region": "EU",
     "init": 0,
+    "stock": 0,
     "sales": 1,
     "remaining": -1,
     "by_platform": {},
     "registered": false
    },
    {
-    "sku": "FTSDHD-1004-E",
-    "region": "EU",
-    "init": 0,
-    "sales": 0,
-    "remaining": 0,
-    "by_platform": {},
-    "registered": true
-   },
-   {
     "sku": "FTSDCT-3004-DS",
     "region": "UK",
     "init": 0,
+    "stock": 0,
     "sales": 0,
     "remaining": 0,
     "by_platform": {},
@@ -28545,13 +28567,14 @@ const EMBEDDED_DATA = {
     "sku": "FTSDCT-2020-E",
     "region": "UK",
     "init": 0,
+    "stock": 0,
     "sales": 0,
     "remaining": 0,
     "by_platform": {},
     "registered": false
    }
   ],
-  "note": "总览表未登记的停产清仓 SKU：期初库存取自「旧库存」sheet，独立统计，不计入上方任何指标"
+  "note": "总览表未登记的停产清仓 SKU：期初 = 最新库存(快照) + 累计销量，独立统计，不计入上方任何指标；快照缺失者库存按 0 计"
  },
  "images": {
   "ID_08B3951ACF474DE9A821A3FD82A1607F": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAoHBwgHBgoICAgLCgoLDhgQDg0NDh0VFhEYIx8lJCIfIiEmKzcvJik0KSEiMEExNDk7Pj4+JS5ESUM8SDc9Pjv/2wBDAQoLCw4NDhwQEBw7KCIoOzs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozv/wAARCABfAGADASIAAhEBAxEB/8QAGwABAAIDAQEAAAAAAAAAAAAAAAYHAgQFAwH/xAAxEAACAgECBAYABQMFAAAAAAABAgADEQQhBQYSMRMiQVFhcRSBobHwBzLBJEJSkfH/xAAXAQEBAQEAAAAAAAAAAAAAAAAAAwIB/8QAHBEBAQEBAQADAQAAAAAAAAAAAAECESExQVFh/9oADAMBAAIRAxEAPwC5oiICIiAiJ56i9NPQ9znCqM7wPSJhVal1YdGBB9jmZwEREBERAREQEREBIXzPztTw7UX6BdO1qhCGcHfPrsRgiTJv7TjbaUrzte1vF9Y/SqujnOc9TKFxg5G2R64mdVnV8WVy3zAvE2GlTTsq11K3W1qE5Pp0r2+pIpUPINvhcbpZ0IrsTAQVszFsdwdyAPX3lujcRm9hm9j7ERNNEREBERAREwtTxKmXGcj3x+vpA43NmqNPB7akd67bVIrKn+7A3B+MSkuJ6ltRcQai3lzlwCQR3G+fXP5Sec5cT1teqr4dq2R3TpcFQesd+2Nu3rgfUh9tINLXFBZ0kgsSB8bgfUhrXqOtevblvVVrxKtz+IqUMWbpY19Qx3yMnH1Lq4fxDTayhTTZXkbdCncfEoyjVo9lmCvhqm9i5OPN2H7bf5lg8hULqltsp17LWj+epB0dZIznPf0+O31O5t7x3N94n8T4AFAA7CfZZUiIgIiICavEEvfT/wCnOHBzsTn+fc2pweYuJanQ1v4HhuBUXeu1guVH/D3Pwficvw5VXcw6mw8Stp8Vi4YqUXLOM9/MO+D29JG+jiCuG062M4PSyk46stnH6nM6XFOJXa3iviaKlUezfJQAKM9woGP4Z521OGvrqvY22dkBwFHbcD9+8h39Rt9YWdDOyKLBYoDGsKDj6A+u8k/LvELNPrKtQLFttWklckFqkyAcDbHf9fuRi5rtHffqU6gAELlcdIA749d/XPvNzgWorps/FOGYJhrEKgde+QD7+m35x/SL00WoOp062MvS3qMEfuBNic3g3EF12jrceCoKjCV2dZXbsTidKXi5EROhERA8dTYq1FTetLMPKxI2P5ysOdOJ8RHE0ouNDN0ZrdFGMZ2IOSQe+/tmWfqdNTrKGo1FYsrbupkd1v8AT/gmrta3otqc5INbY6e2MfAwf+zMalvwzqWqns0aWPihel0GOoNjAH8xNTxU0lT1VVks+7sRl2Psc+knV3InFaHbS8PFAN2bGLEqVXP+5ht1H2BPb2Eimo4DxDh2ssq1WmfTuwLlLHDFh6sPj6kuX7S5fto1UBtQWfy2MpyW7Y+fr5mz+Heq38Rbq/ID1BayOkbdwB9Tb0fB+JXW11V0HobIoNmwwPb1P/k71X9N9fdiy7yuUBBK9Sk9wp3yBnvtHO0k66HK3Ga61VGAyrr4dSoQW2x1Fs4A+AN5YtbFq1Zhgkbjf/MhXL/JWt4fpwb7aksBGQAGJx7NvgH6ztJsidCBcscerHJlcSyK56yiIm2iIiAiIgeeouTT6ey+zPRWhdsd8AZkas5e1HEuGW0uU03i0sigoCwJXHU7DDMc7nsPuSmIEWt5aTR6YWVUqz11jrVVGHIAyV2yjHHyPj1kmpsW6lLUz0uoYZ9jM4gIiICIiB//2Q==",
@@ -28700,26 +28723,21 @@ function buildCountdown(){
 
 /* ============ 1. 整体情况 ============ */
 function buildSummary(){
-  const s = DATA.summary;
-  const comp = s.completion;
-  const compCls = comp>=100?"good":(comp>=60?"good":"warn");
+  const s = DATA.summary, c = DATA.countdown;
   return `<div class="card">
     <h2><span class="bar"></span>整体情况</h2>
-    <p class="hint">${SM} 动销总览（库存快照 ${DATA.meta.inventory_date}，${PM} 销量单独计）</p>
+    <p class="hint">库存快照 ${DATA.meta.inventory_date}；${SM} 动销总览（停产清仓 SKU 见最下方独立区块，不计入此处）</p>
     <div class="kpis">
-      <div class="kpi"><div class="k">期初库存 (${DATA.meta.inventory_date})</div><div class="v">${fmt(s.total_inventory)}</div>
-        <div class="d">在册 ${s.sku_count} 行 / ${s.unique_sku} 个 SKU</div></div>
-      <div class="kpi"><div class="k">${SM}累计销量</div><div class="v">${fmt(s.oct_sales)}</div>
-        <div class="split2"><div class="pill"><div class="pk">UK</div><div class="pv" style="color:var(--uk)">${fmt(s.uk_sales)}</div></div>
-        <div class="pill"><div class="pk">EU</div><div class="pv" style="color:var(--eu)">${fmt(s.eu_sales)}</div></div></div></div>
-      <div class="kpi"><div class="k">${PM}销量（参考）</div><div class="v">${fmt(s.sep_sales)}</div>
-        <div class="d">早于库存快照，不计入完成率</div></div>
-      <div class="kpi"><div class="k">剩余库存</div><div class="v">${fmt(s.current_inventory)}</div>
-        <div class="d">期初 − ${SM}销量</div></div>
-      <div class="kpi ${compCls}"><div class="k">预测完成率</div><div class="v">${comp}<small>%</small></div>
-        <div class="d">${fmt(s.oct_sales)} / ${fmt(s.total_predicted)}</div></div>
-      <div class="kpi"><div class="k">总预测 (各平台)</div><div class="v">${fmt(s.total_predicted)}</div>
-        <div class="d">总览表预测数量合计</div></div>
+      <div class="kpi"><div class="k">期初库存</div><div class="v">${fmt(s.total_inventory)}</div>
+        <div class="d">在册 ${s.sku_count} 行 / ${s.unique_sku} 个 SKU（按最新库存反推）</div></div>
+      <div class="kpi"><div class="k">期末库存</div><div class="v">${fmt(s.current_inventory)}</div>
+        <div class="d">期初 − ${SM}累计销量</div></div>
+      <div class="kpi"><div class="k">${c.daily_avg_label||'当前日均销量'}</div><div class="v">${c.daily_avg}</div>
+        <div class="d">最近一个自然月 已售 ÷ 已过天数</div></div>
+      <div class="kpi warn"><div class="k">达成需日均</div><div class="v">${c.needed_per_day==null?"—":c.needed_per_day}</div>
+        <div class="d">缺口 ÷ 剩余 ${c.days_left} 天</div></div>
+      <div class="kpi ${ (c.needed_per_day - c.daily_avg)>0?'warn':'good' }"><div class="k">剩余缺口</div><div class="v">${fmt(c.gap)}</div>
+        <div class="d">预测 − 已售</div></div>
     </div>
   </div>`;
 }
@@ -28967,7 +28985,7 @@ function buildLegacy(){
   const skuOpts = `<option value="ALL">全部 SKU（合计）</option>` +
     L.detail.map(r=>`<option value="${r.sku}" ${legacySku===r.sku?'selected':''}>${r.sku} · ${r.region}</option>`).join("");
   const unreg = L.unregistered && L.unregistered.length
-    ? `<p class="hint" style="color:var(--eu)">⚠ ${L.unregistered.join("、")} 在总览表与旧库存表中均未登记，期初按 0 计。</p>` : "";
+    ? `<p class="hint" style="color:var(--eu)">⚠ ${L.unregistered.join("、")} 未在总览表登记（仅见于库存快照/销量），归入独立清仓统计。</p>` : "";
   return `<div class="card legacy">
     <h2><span class="bar"></span>旧库存 / 停产清仓 SKU（独立统计）</h2>
     <p class="hint">${L.note}。本区块自成一套柱状图与明细表，与上方所有指标完全隔离。</p>
@@ -28976,7 +28994,7 @@ function buildLegacy(){
       <div class="kpi"><div class="k">清仓 SKU</div><div class="v">${L.unique_sku}</div>
         <div class="d">按 SKU 去重（${L.sku_count} 行含区域拆分）</div></div>
       <div class="kpi"><div class="k">期初库存</div><div class="v">${fmt(L.init_total)}</div>
-        <div class="d">取自「旧库存」sheet</div></div>
+        <div class="d">最新库存(快照) + 累计销量</div></div>
       <div class="kpi"><div class="k">${SM}累计销量</div><div class="v">${fmt(L.sales_total)}</div>
         <div class="d">${PM} ${fmt(L.sep_sales)}（仅展示）· ${SM} ${fmt(L.oct_sales)}</div></div>
       <div class="kpi"><div class="k">剩余库存</div><div class="v">${fmt(L.remaining)}</div>
