@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-11-05 09:41",
+ "generated_at": "2026-11-05 10:44",
  "meta": {
   "category": "圣诞树",
   "inventory_date": "2026-11-03",
@@ -57,24 +57,24 @@
   "days_left": 35,
   "daily_avg": 568.5,
   "daily_avg_label": "11月日均销量",
-  "gap": 42904,
-  "needed_per_day": 1225.8
+  "gap": 21598,
+  "needed_per_day": 617.1
  },
  "summary": {
   "total_inventory": 48854,
-  "total_predicted": 50216,
+  "total_predicted": 28910,
   "sep_sales": 158,
   "oct_sales": 7312,
   "uk_sales": 3307,
   "eu_sales": 4005,
   "current_inventory": 41542,
-  "completion": 14.6,
+  "completion": 25.3,
   "sku_count": 41,
   "unique_sku": 30,
   "remaining_total": 41542
  },
  "predicted_by_platform": {
-  "AM": 37394,
+  "AM": 16088,
   "TikTok": 6430,
   "Allegro": 153,
   "Cdiscount": 0,
@@ -87,9 +87,9 @@
  "platform_completion": [
   {
    "platform": "AM",
-   "predicted": 37394,
+   "predicted": 16088,
    "actual": 4647,
-   "completion": 12.4
+   "completion": 28.9
   },
   {
    "platform": "TikTok",
@@ -23939,7 +23939,7 @@
    "img": "ID_2BB2B34134C94F05AC53FE60E44604DE",
    "init": 4453,
    "predicted": {
-    "AM": 4266,
+    "AM": 187,
     "TikTok": 100,
     "Allegro": 15,
     "Cdiscount": 0,
@@ -23973,7 +23973,7 @@
    "img": "ID_44AE395985244262913CC4A19D0E71A4",
    "init": 1946,
    "predicted": {
-    "AM": 1848,
+    "AM": 98,
     "TikTok": 0,
     "Allegro": 10,
     "Cdiscount": 0,
@@ -24007,7 +24007,7 @@
    "img": "ID_B6E6C46A04A847BEB5C6AF645995275D",
    "init": 2459,
    "predicted": {
-    "AM": 1550,
+    "AM": 909,
     "TikTok": 0,
     "Allegro": 0,
     "Cdiscount": 0,
@@ -24041,7 +24041,7 @@
    "img": "ID_44AE395985244262913CC4A19D0E71A4",
    "init": 3499,
    "predicted": {
-    "AM": 3269,
+    "AM": 230,
     "TikTok": 0,
     "Allegro": 10,
     "Cdiscount": 0,
@@ -24075,7 +24075,7 @@
    "img": "ID_B6E6C46A04A847BEB5C6AF645995275D",
    "init": 1117,
    "predicted": {
-    "AM": 758,
+    "AM": 359,
     "TikTok": 0,
     "Allegro": 0,
     "Cdiscount": 0,
@@ -24109,7 +24109,7 @@
    "img": "ID_6F46E222082B4412B7CC16C5BF7CFE39",
    "init": 2136,
    "predicted": {
-    "AM": 1776,
+    "AM": 360,
     "TikTok": 300,
     "Allegro": 10,
     "Cdiscount": 0,
@@ -24143,7 +24143,7 @@
    "img": "ID_96C19ED73404428991987D07E29E873F",
    "init": 1232,
    "predicted": {
-    "AM": 1233,
+    "AM": 1008,
     "TikTok": 0,
     "Allegro": 0,
     "Cdiscount": 0,
@@ -24177,7 +24177,7 @@
    "img": "ID_EE286DC6428A4F329C6EF6506E7C829B",
    "init": 1156,
    "predicted": {
-    "AM": 1104,
+    "AM": 52,
     "TikTok": 0,
     "Allegro": 20,
     "Cdiscount": 0,
@@ -24211,7 +24211,7 @@
    "img": "ID_E6C71F4DB1944493BB32757D7AF4D7C6",
    "init": 1307,
    "predicted": {
-    "AM": 1311,
+    "AM": 1115,
     "TikTok": 0,
     "Allegro": 0,
     "Cdiscount": 0,
@@ -24245,7 +24245,7 @@
    "img": "ID_FFBE65E0487544969F15D27DD3935414",
    "init": 1215,
    "predicted": {
-    "AM": 1224,
+    "AM": 1044,
     "TikTok": 0,
     "Allegro": 0,
     "Cdiscount": 0,
@@ -24279,7 +24279,7 @@
    "img": "ID_2BB2B34134C94F05AC53FE60E44604DE",
    "init": 981,
    "predicted": {
-    "AM": 872,
+    "AM": 109,
     "TikTok": 50,
     "Allegro": 8,
     "Cdiscount": 0,
@@ -24313,7 +24313,7 @@
    "img": "ID_44AE395985244262913CC4A19D0E71A4",
    "init": 168,
    "predicted": {
-    "AM": 139,
+    "AM": 29,
     "TikTok": 0,
     "Allegro": 10,
     "Cdiscount": 0,
@@ -24347,7 +24347,7 @@
    "img": "ID_5FF8AFD0421D49BE957A8487A32C7476",
    "init": 1970,
    "predicted": {
-    "AM": 1937,
+    "AM": 33,
     "TikTok": 0,
     "Allegro": 5,
     "Cdiscount": 0,
@@ -24381,7 +24381,7 @@
    "img": "ID_17713DACBF264150B91679C740F9F287",
    "init": 1197,
    "predicted": {
-    "AM": 1129,
+    "AM": 68,
     "TikTok": 0,
     "Allegro": 20,
     "Cdiscount": 0,
@@ -24415,7 +24415,7 @@
    "img": "ID_347B58062D45430989DC529C8ECC7219",
    "init": 902,
    "predicted": {
-    "AM": 720,
+    "AM": 182,
     "TikTok": 0,
     "Allegro": 15,
     "Cdiscount": 0,
@@ -24449,7 +24449,7 @@
    "img": "ID_6F46E222082B4412B7CC16C5BF7CFE39",
    "init": 500,
    "predicted": {
-    "AM": 361,
+    "AM": 139,
     "TikTok": 100,
     "Allegro": 5,
     "Cdiscount": 0,
@@ -24483,7 +24483,7 @@
    "img": "ID_08B3951ACF474DE9A821A3FD82A1607F",
    "init": 201,
    "predicted": {
-    "AM": 181,
+    "AM": 20,
     "TikTok": 0,
     "Allegro": 10,
     "Cdiscount": 0,
@@ -24517,7 +24517,7 @@
    "img": "ID_FF8F8AD750AE442AB65A271405CA5329",
    "init": 274,
    "predicted": {
-    "AM": 275,
+    "AM": 259,
     "TikTok": 0,
     "Allegro": 0,
     "Cdiscount": 0,
@@ -24551,7 +24551,7 @@
    "img": "ID_08B3951ACF474DE9A821A3FD82A1607F",
    "init": 321,
    "predicted": {
-    "AM": 205,
+    "AM": 116,
     "TikTok": 0,
     "Allegro": 15,
     "Cdiscount": 0,
@@ -24585,7 +24585,7 @@
    "img": "ID_750CE023977245DBA9AF3494F1E5DD2F",
    "init": 225,
    "predicted": {
-    "AM": 225,
+    "AM": 0,
     "TikTok": 0,
     "Allegro": 0,
     "Cdiscount": 0,
@@ -24619,7 +24619,7 @@
    "img": "ID_750CE023977245DBA9AF3494F1E5DD2F",
    "init": 135,
    "predicted": {
-    "AM": 135,
+    "AM": 0,
     "TikTok": 0,
     "Allegro": 0,
     "Cdiscount": 0,
@@ -24653,7 +24653,7 @@
    "img": "ID_39BF2FC22469432990C09187093E0F71",
    "init": 3749,
    "predicted": {
-    "AM": 1903,
+    "AM": 1846,
     "TikTok": 1500,
     "Allegro": 0,
     "Cdiscount": 0,
@@ -24687,7 +24687,7 @@
    "img": "ID_57D2931D095944F1AE09A59777023F83",
    "init": 5555,
    "predicted": {
-    "AM": 1456,
+    "AM": 4099,
     "TikTok": 3500,
     "Allegro": 0,
     "Cdiscount": 0,
@@ -24721,7 +24721,7 @@
    "img": "ID_DAE6ABDB70224051BD68732A595F4FD1",
    "init": 947,
    "predicted": {
-    "AM": 626,
+    "AM": 321,
     "TikTok": 0,
     "Allegro": 0,
     "Cdiscount": 0,
@@ -24755,7 +24755,7 @@
    "img": "ID_57D2931D095944F1AE09A59777023F83",
    "init": 1212,
    "predicted": {
-    "AM": 389,
+    "AM": 823,
     "TikTok": 480,
     "Allegro": 0,
     "Cdiscount": 0,
@@ -24789,7 +24789,7 @@
    "img": "ID_39BF2FC22469432990C09187093E0F71",
    "init": 1725,
    "predicted": {
-    "AM": 1040,
+    "AM": 685,
     "TikTok": 400,
     "Allegro": 0,
     "Cdiscount": 0,
@@ -24823,7 +24823,7 @@
    "img": "ID_240327F02F90419FA1D6CE712CF0CB0F",
    "init": 1053,
    "predicted": {
-    "AM": 812,
+    "AM": 241,
     "TikTok": 0,
     "Allegro": 0,
     "Cdiscount": 0,
@@ -24857,7 +24857,7 @@
    "img": "ID_FFBE65E0487544969F15D27DD3935414",
    "init": 439,
    "predicted": {
-    "AM": 519,
+    "AM": 335,
     "TikTok": 0,
     "Allegro": 0,
     "Cdiscount": 0,
@@ -24891,7 +24891,7 @@
    "img": "ID_240327F02F90419FA1D6CE712CF0CB0F",
    "init": 1082,
    "predicted": {
-    "AM": 962,
+    "AM": 120,
     "TikTok": 0,
     "Allegro": 0,
     "Cdiscount": 0,
@@ -24925,7 +24925,7 @@
    "img": "ID_E6C71F4DB1944493BB32757D7AF4D7C6",
    "init": 772,
    "predicted": {
-    "AM": 847,
+    "AM": 697,
     "TikTok": 0,
     "Allegro": 0,
     "Cdiscount": 0,
@@ -24959,7 +24959,7 @@
    "img": "ID_B77438FE586942EE9C8B8B1D28A92584",
    "init": 78,
    "predicted": {
-    "AM": 34,
+    "AM": 44,
     "TikTok": 0,
     "Allegro": 0,
     "Cdiscount": 0,
@@ -24993,7 +24993,7 @@
    "img": "ID_27F61E08E4A8428D93441543EDF46420",
    "init": 416,
    "predicted": {
-    "AM": 382,
+    "AM": 34,
     "TikTok": 0,
     "Allegro": 0,
     "Cdiscount": 0,
@@ -25027,7 +25027,7 @@
    "img": "ID_240327F02F90419FA1D6CE712CF0CB0F",
    "init": 404,
    "predicted": {
-    "AM": 345,
+    "AM": 59,
     "TikTok": 0,
     "Allegro": 0,
     "Cdiscount": 0,
@@ -25061,7 +25061,7 @@
    "img": "ID_96C19ED73404428991987D07E29E873F",
    "init": 480,
    "predicted": {
-    "AM": 478,
+    "AM": 2,
     "TikTok": 0,
     "Allegro": 0,
     "Cdiscount": 0,
@@ -25095,7 +25095,7 @@
    "img": "ID_DAE6ABDB70224051BD68732A595F4FD1",
    "init": 318,
    "predicted": {
-    "AM": 216,
+    "AM": 102,
     "TikTok": 0,
     "Allegro": 0,
     "Cdiscount": 0,
@@ -25129,7 +25129,7 @@
    "img": "ID_27F61E08E4A8428D93441543EDF46420",
    "init": 299,
    "predicted": {
-    "AM": 188,
+    "AM": 111,
     "TikTok": 0,
     "Allegro": 0,
     "Cdiscount": 0,
@@ -25163,7 +25163,7 @@
    "img": "ID_A00A0529E5E1460EA7DF96FDD9438B5B",
    "init": 598,
    "predicted": {
-    "AM": 588,
+    "AM": 10,
     "TikTok": 0,
     "Allegro": 0,
     "Cdiscount": 0,
@@ -25197,7 +25197,7 @@
    "img": "ID_2E2C4B99D2D84FC7B1D4AE67E86426EB",
    "init": 1322,
    "predicted": {
-    "AM": 1170,
+    "AM": 152,
     "TikTok": 0,
     "Allegro": 0,
     "Cdiscount": 0,
@@ -25231,7 +25231,7 @@
    "img": "ID_9F3F193F45E949619B5D90CF3BDE896E",
    "init": 766,
    "predicted": {
-    "AM": 676,
+    "AM": 90,
     "TikTok": 0,
     "Allegro": 0,
     "Cdiscount": 0,
@@ -25265,7 +25265,7 @@
    "img": "ID_750CE023977245DBA9AF3494F1E5DD2F",
    "init": 180,
    "predicted": {
-    "AM": 180,
+    "AM": 0,
     "TikTok": 0,
     "Allegro": 0,
     "Cdiscount": 0,
@@ -25299,7 +25299,7 @@
    "img": "ID_750CE023977245DBA9AF3494F1E5DD2F",
    "init": 65,
    "predicted": {
-    "AM": 65,
+    "AM": 0,
     "TikTok": 0,
     "Allegro": 0,
     "Cdiscount": 0,
@@ -29298,21 +29298,6 @@
     "registered": true
    },
    {
-    "sku": "FTSDCT-4031-DS",
-    "region": "EU",
-    "init": 34,
-    "stock": 0,
-    "sales": 34,
-    "remaining": 0,
-    "by_platform": {
-     "Allegro": 3,
-     "AM": 29,
-     "SHEIN": 1,
-     "LeroyMerlin": 1
-    },
-    "registered": true
-   },
-   {
     "sku": "FTSDCT-4012-DS",
     "region": "EU",
     "init": 38,
@@ -29324,6 +29309,21 @@
      "Kaufland": 2,
      "SHEIN": 11,
      "AM": 16
+    },
+    "registered": true
+   },
+   {
+    "sku": "FTSDCT-4031-DS",
+    "region": "EU",
+    "init": 34,
+    "stock": 0,
+    "sales": 34,
+    "remaining": 0,
+    "by_platform": {
+     "Allegro": 3,
+     "AM": 29,
+     "SHEIN": 1,
+     "LeroyMerlin": 1
     },
     "registered": true
    },
@@ -29345,6 +29345,19 @@
     "registered": true
    },
    {
+    "sku": "FTSDHD-1004-E",
+    "region": "UK",
+    "init": 29,
+    "stock": 0,
+    "sales": 29,
+    "remaining": 0,
+    "by_platform": {
+     "SHEIN": 5,
+     "AM": 24
+    },
+    "registered": true
+   },
+   {
     "sku": "FTSDCT-1029-DS",
     "region": "EU",
     "init": 54,
@@ -29357,19 +29370,6 @@
      "Cdiscount": 3,
      "SHEIN": 3,
      "Kaufland": 4
-    },
-    "registered": true
-   },
-   {
-    "sku": "FTSDHD-1004-E",
-    "region": "UK",
-    "init": 29,
-    "stock": 0,
-    "sales": 29,
-    "remaining": 0,
-    "by_platform": {
-     "SHEIN": 5,
-     "AM": 24
     },
     "registered": true
    },
