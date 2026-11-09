@@ -34775,7 +34775,8 @@ function barChart(labels, series, W, H){
   }
 
   let bars="";
-  const showNum = barW>=18;
+  const showNum = true;                       // 始终显示柱顶合计数字
+  const numFs = barW>=18 ? 10.5 : 9;          // 柱子较窄时缩小字号防重叠
   for(let i=0;i<n;i++){
     const t=totals[i];
     const x0=cx(i)-barW/2;
@@ -34789,7 +34790,7 @@ function barChart(labels, series, W, H){
         bars+=`<rect x="${x0}" y="${yTop}" width="${barW}" height="${Math.max(1,yBottom-yTop)}" fill="${s.color}" rx="2"><title>${tip}</title></rect>`;
         acc+=v;
       });
-      if(showNum) bars+=`<text x="${cx(i)}" y="${y(t)-5}" fill="var(--txt)" font-size="10.5" font-weight="600" text-anchor="middle">${t}</text>`;
+      if(showNum) bars+=`<text x="${cx(i)}" y="${y(t)-5}" fill="var(--txt)" font-size="${numFs}" font-weight="600" text-anchor="middle">${t}</text>`;
     }else{
       bars+=`<rect x="${x0}" y="${yBase-2}" width="${barW}" height="2" fill="var(--line2)" rx="1"><title>${tip}</title></rect>`;
     }
