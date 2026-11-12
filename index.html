@@ -116557,39 +116557,49 @@ function buildCountdown(){
 
 /* ============ 1. 整体情况 ============ */
 function buildSummary(){
-  const s = DATA.summary, c = DATA.countdown;
-  const dl = DATA.daily.labels, dt = DATA.daily.total;
-  const last3 = dt.slice(-3);
-  const sum3 = last3.reduce((a,b)=>a+(b||0),0);
-  const l3a = dl[dl.length-3], l3b = dl[dl.length-1];
-  // UK / EU 拆分（按站点汇总在册 SKU 的预测、销量、剩余库存）
-  let ukP=0,ukS=0,ukR=0, euP=0,euS=0,euR=0;
-  DATA.sku_detail.forEach(r=>{
-    const p = Object.values(r.predicted).reduce((a,b)=>a+(b||0),0);
-    if(r.site==="UK"){ ukP+=p; ukS+=r.total_sales; ukR+=r.remaining; }
-    else if(r.site==="EU"){ euP+=p; euS+=r.total_sales; euR+=r.remaining; }
-  });
-  const ukC = ukP? (100*ukS/ukP).toFixed(1) : "—";
-  const euC = euP? (100*euS/euP).toFixed(1) : "—";
+  const c = DATA.countdown;
+  const dl = c.days_left;
+  // 计算每个区域（总计 / UK / EU）的 4 个核心指标
+  function reg(site){
+    let init=0, cur=0, pred=0, sales=0;
+    DATA.sku_detail.forEach(r=>{
+      if(site && r.site!==site) return;
+      init  += r.init||0;
+      cur   += r.remaining||0;
+      pred  += Object.values(r.predicted||{}).reduce((a,b)=>a+(b||0),0);
+      sales += r.total_sales||0;
+    });
+    const arr = site ? DATA.daily[site.toLowerCase()] : DATA.daily.total;
+    const last3 = arr.slice(-3);
+    const avg3 = last3.reduce((a,b)=>a+(b||0),0)/3;
+    const needed = dl>0 ? (pred-sales)/dl : null;   // 需要的日均 = (预测 − 已售) ÷ 剩余天数
+    return {init, cur, avg3, needed};
+  }
+  const T = reg(null), U = reg("UK"), E = reg("EU");
+
+  function block(title, r, tag){
+    const behind = (r.needed!=null && r.needed > r.avg3);     // 需要的日均 > 当前节奏 → 落后，需提速
+    const needCls = behind ? "warn" : "good";
+    const needTxt = r.needed==null ? "—" : r.needed.toFixed(1);
+    return `<div class="region" style="margin-top:16px">
+      <div class="region-h">${tag||""}${title}</div>
+      <div class="kpis">
+        <div class="kpi"><div class="k">期初库存</div><div class="v">${fmt(r.init)}</div></div>
+        <div class="kpi"><div class="k">期末库存</div><div class="v">${fmt(r.cur)}</div></div>
+        <div class="kpi"><div class="k">近3天日均销量</div><div class="v">${r.avg3.toFixed(1)}</div></div>
+        <div class="kpi ${needCls}"><div class="k">需要的日均</div><div class="v">${needTxt}</div>
+          <div class="d">${behind?"低于当前节奏，需提速":"高于当前节奏，进度超前"} · 剩 ${dl} 天</div></div>
+      </div>
+    </div>`;
+  }
+  const ukTag = `<span class="tag uk">UK</span> `;
+  const euTag = `<span class="tag eu">EU</span> `;
   return `<div class="card">
     <h2><span class="bar"></span>整体情况</h2>
-    <p class="hint">库存快照 ${DATA.meta.inventory_date}；${SM} 动销总览（停产清仓 SKU 见最下方独立区块，不计入此处）</p>
-    <div class="kpis">
-      <div class="kpi"><div class="k">期初库存</div><div class="v">${fmt(s.total_inventory)}</div>
-        <div class="d">在册 ${s.sku_count} 行 / ${s.unique_sku} 个 SKU（按最新库存反推）</div></div>
-      <div class="kpi"><div class="k">期末库存</div><div class="v">${fmt(s.current_inventory)}</div>
-        <div class="d">期初 − ${SM}累计销量</div></div>
-      <div class="kpi"><div class="k">近3天销量</div><div class="v">${fmt(sum3)}</div>
-        <div class="d">日均 ≈ ${Math.round(sum3/3)}（${l3a} ~ ${l3b}）</div></div>
-      <div class="kpi warn"><div class="k">需要的日均</div><div class="v">${c.needed_per_day==null?"—":c.needed_per_day}</div>
-        <div class="d">缺口 ÷ 剩余 ${c.days_left} 天</div></div>
-      <div class="kpi ${ (c.needed_per_day - c.daily_avg)>0?'warn':'good' }"><div class="k">缺口</div><div class="v">${fmt(c.gap)}</div>
-        <div class="d">预测 − 已售</div></div>
-      <div class="kpi"><div class="k">UK 销量 / 完成率</div><div class="v">${fmt(ukS)}</div>
-        <div class="d">完成率 ${ukC}% · 剩余 ${fmt(ukR)} · 预测 ${fmt(ukP)}</div></div>
-      <div class="kpi"><div class="k">EU 销量 / 完成率</div><div class="v">${fmt(euS)}</div>
-        <div class="d">完成率 ${euC}% · 剩余 ${fmt(euR)} · 预测 ${fmt(euP)}</div></div>
-    </div>
+    <p class="hint">库存快照 ${DATA.meta.inventory_date}；${SM} 动销总览（停产清仓 SKU 见最下方独立区块，不计入此处）。剩余售卖期 ${dl} 天。</p>
+    ${block("整体", T, "")}
+    ${block("站点", U, ukTag)}
+    ${block("站点", E, euTag)}
   </div>`;
 }
 
