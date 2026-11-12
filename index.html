@@ -116448,7 +116448,7 @@ let euPlat = "ALL";
 // 各 SKU 销量/库存对比：按站点拆成 UK / EU 两张表，排序状态存于 SORTS.skusite_uk / skusite_eu
 let detailState = {site:"ALL", plat:"ALL", q:""};
 let legacyState = {q:""};
-let sellState = {q:""};
+let sellState = {q:"", plat:"ALL", site:"ALL"};
 // 明细排序状态：key=列键（平台列为 "P::平台名"），dir=1 升序 / -1 降序；默认按 SKU 升序
 const SORTS = {detail:{key:"sku", dir:1}, legacy:{key:"sku", dir:1}, skusite_uk:{key:"sku", dir:1}, skusite_eu:{key:"sku", dir:1}, sell:{key:"sku", dir:1}};
 let ATTS = [];                       // 品类属性（来自 DATA.meta.attributes），renderAll 时赋值
@@ -116484,15 +116484,15 @@ function renderAll(){
   SM = DATA.meta.stat_month_label; PM = DATA.meta.prior_month_label;
   const app = document.getElementById("app");
   app.innerHTML = `<div id="countdown"></div><div id="summary"></div><div id="daily"></div>` +
-                  `<div id="eu"></div><div id="completion"></div><div id="skusite"></div><div id="detail"></div><div id="sellthrough"></div><div id="legacy"></div>`;
+                  `<div id="eu"></div><div id="sellthrough"></div><div id="completion"></div><div id="skusite"></div><div id="detail"></div><div id="legacy"></div>`;
   document.getElementById("countdown").innerHTML = buildCountdown();
   document.getElementById("summary").innerHTML = buildSummary();
   document.getElementById("daily").innerHTML = buildDaily();   fillDaily();
   document.getElementById("eu").innerHTML = buildEu();         fillEu();
+  document.getElementById("sellthrough").innerHTML = buildSellThrough();  fillSellThrough();
   document.getElementById("completion").innerHTML = buildCompletion();
   document.getElementById("skusite").innerHTML = buildSkuSite();  fillSkuSite();
   document.getElementById("detail").innerHTML = buildDetail();  fillDetail();
-  document.getElementById("sellthrough").innerHTML = buildSellThrough();  fillSellThrough();
   if(DATA.meta.legacy_enabled){
     document.getElementById("legacy").innerHTML = buildLegacy();  fillLegacy();
   } else {
@@ -116555,6 +116555,10 @@ function buildCountdown(){
 /* ============ 1. 整体情况 ============ */
 function buildSummary(){
   const s = DATA.summary, c = DATA.countdown;
+  const dl = DATA.daily.labels, dt = DATA.daily.total;
+  const last3 = dt.slice(-3);
+  const sum3 = last3.reduce((a,b)=>a+(b||0),0);
+  const l3a = dl[dl.length-3], l3b = dl[dl.length-1];
   return `<div class="card">
     <h2><span class="bar"></span>整体情况</h2>
     <p class="hint">库存快照 ${DATA.meta.inventory_date}；${SM} 动销总览（停产清仓 SKU 见最下方独立区块，不计入此处）</p>
@@ -116563,8 +116567,8 @@ function buildSummary(){
         <div class="d">在册 ${s.sku_count} 行 / ${s.unique_sku} 个 SKU（按最新库存反推）</div></div>
       <div class="kpi"><div class="k">期末库存</div><div class="v">${fmt(s.current_inventory)}</div>
         <div class="d">期初 − ${SM}累计销量</div></div>
-      <div class="kpi"><div class="k">${c.daily_avg_label||'当前日均销量'}</div><div class="v">${c.daily_avg}</div>
-        <div class="d">最近一个自然月 已售 ÷ 已过天数</div></div>
+      <div class="kpi"><div class="k">近3天销量</div><div class="v">${fmt(sum3)}</div>
+        <div class="d">日均 ≈ ${Math.round(sum3/3)}（${l3a} ~ ${l3b}）</div></div>
       <div class="kpi warn"><div class="k">需要的日均</div><div class="v">${c.needed_per_day==null?"—":c.needed_per_day}</div>
         <div class="d">缺口 ÷ 剩余 ${c.days_left} 天</div></div>
       <div class="kpi ${ (c.needed_per_day - c.daily_avg)>0?'warn':'good' }"><div class="k">缺口</div><div class="v">${fmt(c.gap)}</div>
@@ -116841,10 +116845,19 @@ function fillDetail(){
 /* ============ 5.5 各 SKU 站点库存与动销（近N天日均 / 可售天数 / 近14天明细） ============ */
 function buildSellThrough(){
   const dl = DATA.countdown.days_left;
+  const sites = [...new Set(DATA.sku_detail.map(r=>r.site))].sort();
+  const siteOpts = `<option value="ALL">全部站点</option>` +
+    sites.map(s=>`<option value="${s}" ${sellState.site===s?'selected':''}>${s}</option>`).join("");
+  const platOpts = `<option value="ALL">全部平台</option>` +
+    DATA.meta.platforms.map(p=>`<option value="${p}" ${sellState.plat===p?'selected':''}>${p}</option>`).join("");
   return `<div class="card">
     <h2><span class="bar"></span>各 SKU 站点库存与动销表</h2>
-    <p class="hint">每行 = 一个 SKU × 站点。剩余库存 = 期初 − 累计销量；近 3/7/14 天日均 = 对应窗口内每日销量的算术平均；可售天数 = 剩余库存 ÷ 近 14 天日均（<b style="color:var(--red)">红</b>=按当前节奏会在剩余 ${dl} 天售卖期结束前售罄，<b style="color:var(--green)">绿</b>=库存可覆盖至期后）；「近14天销量明细」为迷你柱状图，悬停查看每日数值。</p>
+    <p class="hint">每行 = 一个 SKU × 站点（可按站点 / 平台筛选）。剩余库存 = 期初 − 累计销量；近 3/7/14 天日均 = 对应窗口内每日销量的算术平均；可售天数 = 剩余库存 ÷ 近 7 天日均（<b style="color:var(--red)">红</b>=可售天数 &gt; 剩余 ${dl} 天售卖期，库存偏多、卖不完风险，<b style="color:var(--green)">绿</b>=可售天数 &lt; 剩余售卖期，能在售卖期内售罄）；「近14天销量明细」为迷你柱状图，悬停查看每日数值。选择具体平台时，日均与迷你柱按该平台销量计算（剩余库存仍为 SKU 站点合计）。</p>
     <div class="controls">
+      <label>站点</label>
+      <select id="sell-site" onchange="sellState.site=this.value;fillSellThrough()">${siteOpts}</select>
+      <label>平台</label>
+      <select id="sell-plat" onchange="sellState.plat=this.value;fillSellThrough()">${platOpts}</select>
       <input type="text" id="sell-q" value="${esc(sellState.q)}" placeholder="搜索 SKU / 品名…" oninput="sellState.q=this.value.toUpperCase();fillSellThrough()">
       <button class="btn ghost" onclick="SORTS.sell.key='sku';SORTS.sell.dir=1;fillSellThrough()">恢复默认排序</button>
       <span class="sect-note">点击任意表头即可排序（默认按 SKU 升序）</span>
@@ -116887,19 +116900,28 @@ function sparkline14(vals, labs){
 function fillSellThrough(){
   const lab = DATA.daily.labels;
   const bySku = DATA.daily.by_sku;
+  const bySkuPlat = DATA.daily.by_sku_plat;
   const q = sellState.q.trim();
   const dl = DATA.countdown.days_left;
   const last14Lab = lab.slice(-14);
   const rows=[];
   DATA.sku_detail.forEach(r=>{
     if(q && !(r.sku.toUpperCase().includes(q) || String(r.name||"").toUpperCase().includes(q))) return;
+    if(sellState.site && sellState.site!=="ALL" && r.site!==sellState.site) return;
     const key = r.sku+"|"+r.site;
     const ser = bySku[key];
-    const total = ser ? ser.total : [];
+    let total = ser ? ser.total : [];
+    if(sellState.plat && sellState.plat!=="ALL"){
+      const sp = (bySkuPlat[key]||{})[sellState.plat];
+      total = sp ? sp.total : [];
+    }
     const a3 = avgLast(total,3), a7 = avgLast(total,7), a14 = avgLast(total,14);
     const rem = r.remaining;
-    const sellable = a14>0 ? rem/a14 : Infinity;
-    const vals14 = last14Lab.map((d,i)=> total.length>=14 ? (total[total.length-14+i]||0) : 0 );
+    const sellable = a7>0 ? rem/a7 : Infinity;   // 可售天数 = 库存 ÷ 近 7 天日均
+    // 近14天销量明细（按当前筛选口径：平台筛选时取该平台，否则取合计）；不足14天的前导补 0 以对齐日期
+    const tlen = total.length;
+    const vals14 = [];
+    for(let i=0;i<14;i++){ const idx = tlen-14+i; vals14.push(idx>=0 ? (total[idx]||0) : 0); }
     rows.push({sku:r.sku, site:r.site, name:String(r.name||""), remaining:rem,
                avg3:a3, avg7:a7, avg14:a14,
                _sellable: isFinite(sellable)?sellable:1e9, sellableTxt: isFinite(sellable)?sellable.toFixed(1):"∞",
@@ -116909,7 +116931,7 @@ function fillSellThrough(){
   let body="", sumRem=0, sumA14=0, n=0, sumLast14=0;
   list.forEach(x=>{
     const siteTag = x.site==="EU"?`<span class="tag eu">EU</span>`:x.site==="UK"?`<span class="tag uk">UK</span>`:`<span class="tag na">—</span>`;
-    const sc = x.sellableTxt==="∞" ? "var(--muted)" : (x._sellable < dl ? "var(--red)" : "var(--green)");
+    const sc = x.sellableTxt==="∞" ? "var(--muted)" : (x._sellable > dl ? "var(--red)" : "var(--green)");
     sumRem+=x.remaining; sumA14+=x.avg14; sumLast14+=x.vals14.reduce((a,b)=>a+b,0); n++;
     body += `<tr>
       <td class="l"><b>${esc(x.sku)}</b></td>
