@@ -116449,8 +116449,9 @@ let euPlat = "ALL";
 let detailState = {site:"ALL", plat:"ALL", q:""};
 let legacyState = {q:""};
 let sellState = {q:"", plat:"ALL", site:"ALL"};
+let boostState = {site:"ALL"};
 // 明细排序状态：key=列键（平台列为 "P::平台名"），dir=1 升序 / -1 降序；默认按 SKU 升序
-const SORTS = {detail:{key:"sku", dir:1}, legacy:{key:"sku", dir:1}, skusite_uk:{key:"sku", dir:1}, skusite_eu:{key:"sku", dir:1}, sell:{key:"sku", dir:1}};
+const SORTS = {detail:{key:"sku", dir:1}, legacy:{key:"sku", dir:1}, skusite_uk:{key:"sku", dir:1}, skusite_eu:{key:"sku", dir:1}, sell:{key:"sku", dir:1}, boost:{key:"excess", dir:-1}};
 let ATTS = [];                       // 品类属性（来自 DATA.meta.attributes），renderAll 时赋值
 let SM = "10月", PM = "9月";        // 统计月 / 上月标签（来自 config）
 function isTextKey(k){
@@ -116484,12 +116485,13 @@ function renderAll(){
   SM = DATA.meta.stat_month_label; PM = DATA.meta.prior_month_label;
   const app = document.getElementById("app");
   app.innerHTML = `<div id="countdown"></div><div id="summary"></div><div id="daily"></div>` +
-                  `<div id="eu"></div><div id="sellthrough"></div><div id="completion"></div><div id="skusite"></div><div id="detail"></div><div id="legacy"></div>`;
+                  `<div id="eu"></div><div id="sellthrough"></div><div id="boost"></div><div id="completion"></div><div id="skusite"></div><div id="detail"></div><div id="legacy"></div>`;
   document.getElementById("countdown").innerHTML = buildCountdown();
   document.getElementById("summary").innerHTML = buildSummary();
   document.getElementById("daily").innerHTML = buildDaily();   fillDaily();
   document.getElementById("eu").innerHTML = buildEu();         fillEu();
   document.getElementById("sellthrough").innerHTML = buildSellThrough();  fillSellThrough();
+  document.getElementById("boost").innerHTML = buildBoost();   fillBoost();
   document.getElementById("completion").innerHTML = buildCompletion();
   document.getElementById("skusite").innerHTML = buildSkuSite();  fillSkuSite();
   document.getElementById("detail").innerHTML = buildDetail();  fillDetail();
@@ -116512,6 +116514,7 @@ function setSort(scope, key){
   if(scope === "detail") fillDetail();
   else if(scope === "legacy") fillLegacy();
   else if(scope === "sell") fillSellThrough();
+  else if(scope === "boost") fillBoost();
   else fillSkuSite();                                 // skusite_uk / skusite_eu
 }
 function sortTh(scope, key, label, cls){
@@ -116559,6 +116562,15 @@ function buildSummary(){
   const last3 = dt.slice(-3);
   const sum3 = last3.reduce((a,b)=>a+(b||0),0);
   const l3a = dl[dl.length-3], l3b = dl[dl.length-1];
+  // UK / EU 拆分（按站点汇总在册 SKU 的预测、销量、剩余库存）
+  let ukP=0,ukS=0,ukR=0, euP=0,euS=0,euR=0;
+  DATA.sku_detail.forEach(r=>{
+    const p = Object.values(r.predicted).reduce((a,b)=>a+(b||0),0);
+    if(r.site==="UK"){ ukP+=p; ukS+=r.total_sales; ukR+=r.remaining; }
+    else if(r.site==="EU"){ euP+=p; euS+=r.total_sales; euR+=r.remaining; }
+  });
+  const ukC = ukP? (100*ukS/ukP).toFixed(1) : "—";
+  const euC = euP? (100*euS/euP).toFixed(1) : "—";
   return `<div class="card">
     <h2><span class="bar"></span>整体情况</h2>
     <p class="hint">库存快照 ${DATA.meta.inventory_date}；${SM} 动销总览（停产清仓 SKU 见最下方独立区块，不计入此处）</p>
@@ -116573,6 +116585,10 @@ function buildSummary(){
         <div class="d">缺口 ÷ 剩余 ${c.days_left} 天</div></div>
       <div class="kpi ${ (c.needed_per_day - c.daily_avg)>0?'warn':'good' }"><div class="k">缺口</div><div class="v">${fmt(c.gap)}</div>
         <div class="d">预测 − 已售</div></div>
+      <div class="kpi"><div class="k">UK 销量 / 完成率</div><div class="v">${fmt(ukS)}</div>
+        <div class="d">完成率 ${ukC}% · 剩余 ${fmt(ukR)} · 预测 ${fmt(ukP)}</div></div>
+      <div class="kpi"><div class="k">EU 销量 / 完成率</div><div class="v">${fmt(euS)}</div>
+        <div class="d">完成率 ${euC}% · 剩余 ${fmt(euR)} · 预测 ${fmt(euP)}</div></div>
     </div>
   </div>`;
 }
@@ -116852,7 +116868,7 @@ function buildSellThrough(){
     DATA.meta.platforms.map(p=>`<option value="${p}" ${sellState.plat===p?'selected':''}>${p}</option>`).join("");
   return `<div class="card">
     <h2><span class="bar"></span>各 SKU 站点库存与动销表</h2>
-    <p class="hint">每行 = 一个 SKU × 站点（可按站点 / 平台筛选）。剩余库存 = 期初 − 累计销量；近 3/7/14 天日均 = 对应窗口内每日销量的算术平均；可售天数 = 剩余库存 ÷ 近 7 天日均（<b style="color:var(--red)">红</b>=可售天数 &gt; 剩余 ${dl} 天售卖期，库存偏多、卖不完风险，<b style="color:var(--green)">绿</b>=可售天数 &lt; 剩余售卖期，能在售卖期内售罄）；「近14天销量明细」为迷你柱状图，悬停查看每日数值。选择具体平台时，日均与迷你柱按该平台销量计算（剩余库存仍为 SKU 站点合计）。</p>
+    <p class="hint">每行 = 一个 SKU × 站点（可按站点 / 平台筛选）。剩余库存 = 期初 − 累计销量；近 3/7/14 天日均 = 对应窗口内每日销量的算术平均；可售天数 = 剩余库存 ÷ 近 7 天日均（<b style="color:var(--red)">红</b>=可售天数 &gt; 剩余 ${dl} 天售卖期，库存偏多、卖不完风险，<b style="color:var(--green)">绿</b>=可售天数 &lt; 剩余售卖期，能在售卖期内售罄）；<b>日销变动</b> = 近 3 天日均 ÷ 前 7 天日均 − 1，<b style="color:var(--red)">红色</b>标记 = 日销下滑 ≥ 30%（需提销），<b style="color:var(--green)">绿色</b>标记 = 日销上升 ≥ 30%；「近14天销量明细」为迷你柱状图，悬停查看每日数值。选择具体平台时，日均、日销变动与迷你柱按该平台销量计算（剩余库存仍为 SKU 站点合计）。</p>
     <div class="controls">
       <label>站点</label>
       <select id="sell-site" onchange="sellState.site=this.value;fillSellThrough()">${siteOpts}</select>
@@ -116872,6 +116888,7 @@ function buildSellThrough(){
         ${sortTh("sell","avg7","近7天日均")}
         ${sortTh("sell","avg14","近14天日均")}
         ${sortTh("sell","_sellable","可售天数")}
+        ${sortTh("sell","_mv","日销变动")}
         <th class="l">近14天销量明细</th>
       </tr></thead>
       <tbody id="sell-body"></tbody>
@@ -116880,6 +116897,14 @@ function buildSellThrough(){
   </div>`;
 }
 function avgLast(arr, k){ if(!arr||!arr.length) return 0; const s=arr.slice(-k); return s.reduce((a,b)=>a+(b||0),0)/s.length; }
+function movePct(arr){ // 日销变动：近3天日均 vs 前7天日均 的相对变化%
+  if(!arr||arr.length<10) return null;
+  const a3=arr.slice(-3).reduce((a,b)=>a+(b||0),0)/3;
+  const prior=arr.slice(-10,-3);
+  const pa=prior.reduce((a,b)=>a+(b||0),0)/prior.length;
+  if(pa<=0) return null;
+  return (a3-pa)/pa*100;
+}
 function sparkline14(vals, labs){
   const W=168, H=26, n=vals.length, gap=2;
   const bw=Math.max(1,(W-gap*(n-1))/n);
@@ -116916,6 +116941,7 @@ function fillSellThrough(){
       total = sp ? sp.total : [];
     }
     const a3 = avgLast(total,3), a7 = avgLast(total,7), a14 = avgLast(total,14);
+    const mv = movePct(total);
     const rem = r.remaining;
     const sellable = a7>0 ? rem/a7 : Infinity;   // 可售天数 = 库存 ÷ 近 7 天日均
     // 近14天销量明细（按当前筛选口径：平台筛选时取该平台，否则取合计）；不足14天的前导补 0 以对齐日期
@@ -116925,6 +116951,7 @@ function fillSellThrough(){
     rows.push({sku:r.sku, site:r.site, name:String(r.name||""), remaining:rem,
                avg3:a3, avg7:a7, avg14:a14,
                _sellable: isFinite(sellable)?sellable:1e9, sellableTxt: isFinite(sellable)?sellable.toFixed(1):"∞",
+               mv, _mv: mv==null?-1e9:mv,
                vals14, labs14:last14Lab, remCls: rem<0?'neg':''});
   });
   const list = applySort(rows, "sell");
@@ -116933,6 +116960,9 @@ function fillSellThrough(){
     const siteTag = x.site==="EU"?`<span class="tag eu">EU</span>`:x.site==="UK"?`<span class="tag uk">UK</span>`:`<span class="tag na">—</span>`;
     const sc = x.sellableTxt==="∞" ? "var(--muted)" : (x._sellable > dl ? "var(--red)" : "var(--green)");
     sumRem+=x.remaining; sumA14+=x.avg14; sumLast14+=x.vals14.reduce((a,b)=>a+b,0); n++;
+    const mvTxt = x.mv==null ? "—" : (x.mv>0?"↑":"↓")+Math.abs(x.mv).toFixed(0)+"%";
+    const mvCol = x.mv==null?"var(--muted)":(x.mv<=-30?"var(--red)":(x.mv>=30?"var(--green)":"var(--muted)"));
+    const mvW = (x.mv!=null && Math.abs(x.mv)>=30) ? 700 : 400;
     body += `<tr>
       <td class="l"><b>${esc(x.sku)}</b></td>
       <td class="l">${siteTag}</td>
@@ -116942,15 +116972,104 @@ function fillSellThrough(){
       <td>${x.avg7.toFixed(1)}</td>
       <td>${x.avg14.toFixed(1)}</td>
       <td style="color:${sc};font-weight:700">${x.sellableTxt}</td>
+      <td style="color:${mvCol};font-weight:${mvW}">${mvTxt}</td>
       <td class="l">${sparkline14(x.vals14, x.labs14)}</td>
     </tr>`;
   });
   if(!body) body=`<tr><td colspan="99" style="text-align:center;color:var(--muted);padding:24px">无匹配 SKU</td></tr>`;
   const foot=`<tr><td class="l" colspan="3">合计 ${n} 行</td><td>${fmt(sumRem)}</td>`+
-    `<td></td><td></td><td>${n? (sumA14/n).toFixed(1):0}</td><td></td>`+
+    `<td></td><td></td><td>${n? (sumA14/n).toFixed(1):0}</td><td></td><td></td>`+
     `<td class="l">近14天合计销量 ${fmt(sumLast14)}</td></tr>`;
   const b=document.getElementById("sell-body"), f=document.getElementById("sell-foot");
   if(b) b.innerHTML=body; if(f) f.innerHTML=foot;
+}
+
+/* ============ 5.6 重点提销建议（按优先级） ============ */
+function buildBoost(){
+  const sites = [...new Set(DATA.sku_detail.map(r=>r.site))].sort();
+  const siteOpts = `<option value="ALL">全部站点</option>` +
+    sites.map(s=>`<option value="${s}" ${boostState.site===s?'selected':''}>${s}</option>`).join("");
+  return `<div class="card">
+    <h2><span class="bar"></span>重点提销建议（按优先级）</h2>
+    <p class="hint">从「各 SKU 站点库存与动销表」中筛出<b>难以在剩余售卖期内售罄</b>的 SKU×站点（预计滞销 = 剩余库存 − 近7天日均 × 剩余 ${DATA.countdown.days_left} 天 &gt; 0），按「预计滞销件数」降序排优先级：<b style="color:var(--red)">P1</b>=≥500 件、<b style="color:var(--eu)">P2</b>=200~500 件、<b style="color:var(--green)">P3</b>=&lt;200 件；另对「近3天日均较前7天下滑 ≥30%」的标 ⚠ 近期下滑。</p>
+    <div class="controls">
+      <label>站点</label>
+      <select id="boost-site" onchange="boostState.site=this.value;fillBoost()">${siteOpts}</select>
+      <button class="btn ghost" onclick="SORTS.boost.key='excess';SORTS.boost.dir=-1;fillBoost()">恢复默认排序</button>
+      <span class="sect-note">点击表头可排序（默认按预计滞销降序）</span>
+    </div>
+    <div id="boost-sum" class="hint" style="margin:0 0 10px"></div>
+    <div class="tbl-wrap"><table>
+      <thead><tr>
+        ${sortTh("boost","tier","优先级","l")}
+        ${sortTh("boost","sku","SKU","l")}
+        ${sortTh("boost","site","站点","l")}
+        ${sortTh("boost","name","品名","l")}
+        ${sortTh("boost","remaining","剩余库存")}
+        ${sortTh("boost","avg7","近7天日均")}
+        ${sortTh("boost","_sellable","可售天数")}
+        ${sortTh("boost","excess","预计滞销")}
+        ${sortTh("boost","_mv","近3天vs前7天")}
+        <th class="l">建议动作</th>
+      </tr></thead>
+      <tbody id="boost-body"></tbody>
+    </table></div>
+  </div>`;
+}
+function fillBoost(){
+  const bySku = DATA.daily.by_sku;
+  const dl = DATA.countdown.days_left;
+  const rows=[];
+  DATA.sku_detail.forEach(r=>{
+    const k=r.sku+"|"+r.site;
+    const total = (bySku[k]||{}).total || [];
+    const a7 = avgLast(total,7);
+    const rem = r.remaining;
+    const excess = Math.max(0, rem - a7*dl);
+    const mv = movePct(total);
+    rows.push({sku:r.sku, site:r.site, name:String(r.name||""), remaining:rem, avg7:a7,
+               _sellable: a7>0? rem/a7:1e9, excess, _mv: mv==null?-1e9:mv, mv,
+               drop: mv!=null && mv<=-30});
+  });
+  let cand = rows.filter(x=> x.excess>0 || x.drop);   // 需要提销 = 预计滞销 或 近期下滑
+  if(boostState.site && boostState.site!=="ALL") cand = cand.filter(x=>x.site===boostState.site);
+  const list = applySort(cand, "boost");
+  const tierOf = e => e>=500?"P1": e>=200?"P2":"P3";
+  let body="", sumExcess=0, n=0, ukE=0, euE=0;
+  list.forEach(x=>{
+    const tier=tierOf(x.excess);
+    sumExcess+=x.excess; n++;
+    if(x.site==="UK") ukE+=x.excess; else if(x.site==="EU") euE+=x.excess;
+    const siteTag = x.site==="EU"?`<span class="tag eu">EU</span>`:x.site==="UK"?`<span class="tag uk">UK</span>`:`<span class="tag na">—</span>`;
+    const sc = x._sellable>dl?"var(--red)":"var(--green)";
+    const tierCol = tier==="P1"?"var(--red)":tier==="P2"?"var(--eu)":"var(--green)";
+    const sellTxt = x.avg7>0? x._sellable.toFixed(1):"∞";
+    const mvTxt = x.mv==null?"—":(x.mv>0?"↑":"↓")+Math.abs(x.mv).toFixed(0)+"%";
+    const mvCol = x.mv==null?"var(--muted)":(x.mv<=-30?"var(--red)":(x.mv>=30?"var(--green)":"var(--muted)"));
+    const mvW = (x.mv!=null && Math.abs(x.mv)>=30)?700:400;
+    let adv;
+    if(x.drop) adv="⚠ 日销下滑，需紧急提销 / 活动拉回";
+    else if(x.excess>=500) adv="高库存，促销 / 捆绑 / 降价重点去化";
+    else if(x.excess>=200) adv="适度促销去化";
+    else adv="观察，必要时小幅提销";
+    const dropBadge = x.drop?` <span class="tag na" style="color:var(--red);background:rgba(255,107,129,.16)">⚠下滑</span>`:"";
+    body+=`<tr>
+      <td class="l"><span style="color:${tierCol};font-weight:800">${tier}</span></td>
+      <td class="l"><b>${esc(x.sku)}</b></td>
+      <td class="l">${siteTag}</td>
+      <td class="l">${esc(x.name)}${dropBadge}</td>
+      <td ${x.remaining<0?'class="neg"':''}>${fmt(x.remaining)}</td>
+      <td>${x.avg7.toFixed(1)}</td>
+      <td style="color:${sc};font-weight:700">${sellTxt}</td>
+      <td style="font-weight:700">${fmt(x.excess)}</td>
+      <td style="color:${mvCol};font-weight:${mvW}">${mvTxt}</td>
+      <td class="l">${adv}</td>
+    </tr>`;
+  });
+  if(!body) body=`<tr><td colspan="99" style="text-align:center;color:var(--muted);padding:24px">无需要提销的 SKU</td></tr>`;
+  const b=document.getElementById("boost-body"); if(b) b.innerHTML=body;
+  const sEl=document.getElementById("boost-sum");
+  if(sEl) sEl.innerHTML = `共 <b>${n}</b> 个 SKU×站点需提销，预计滞销合计 <b>${fmt(sumExcess)}</b> 件（UK ${fmt(ukE)} / EU ${fmt(euE)}）`;
 }
 
 /* ============ 6. 旧库存 / 停产清仓（独立统计） ============ */
