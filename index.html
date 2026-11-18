@@ -132847,7 +132847,7 @@ function fillBoost(){
     const total = (bySku[k]||{}).total || [];
     const a7 = avgLast(total,7);
     const rem = r.remaining;
-    const excess = Math.max(0, rem - a7*dl);
+    const excess = Math.max(0, Math.round(rem - a7*dl));   // 预计滞销取整
     const mv = movePct(total);
     rows.push({sku:r.sku, site:r.site, name:String(r.name||""), remaining:rem, avg7:a7,
                _sellable: a7>0? rem/a7:1e9, excess, _mv: mv==null?-1e9:mv, mv,
