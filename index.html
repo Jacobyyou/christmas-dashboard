@@ -149485,6 +149485,7 @@ function buildBoost(){
         <th class="l">建议动作</th>
       </tr></thead>
       <tbody id="boost-body"></tbody>
+      <tfoot id="boost-foot"></tfoot>
     </table></div>
   </div>`;
 }
@@ -149507,10 +149508,12 @@ function fillBoost(){
   if(boostState.site && boostState.site!=="ALL") cand = cand.filter(x=>x.site===boostState.site);
   const list = applySort(cand, "boost");
   const tierOf = e => e>=500?"P1": e>=200?"P2":"P3";
-  let body="", sumExcess=0, n=0, ukE=0, euE=0;
+  let body="", sumExcess=0, n=0, ukE=0, euE=0, sumRem=0, sumAvg7=0;
+  const tierN={P1:0,P2:0,P3:0};
   list.forEach(x=>{
     const tier=tierOf(x.excess);
     sumExcess+=x.excess; n++;
+    sumRem+=x.remaining; sumAvg7+=x.avg7; tierN[tier]++;
     if(x.site==="UK") ukE+=x.excess; else if(x.site==="EU") euE+=x.excess;
     const siteTag = x.site==="EU"?`<span class="tag eu">EU</span>`:x.site==="UK"?`<span class="tag uk">UK</span>`:`<span class="tag na">—</span>`;
     const sc = x._sellable>dl?"var(--red)":"var(--green)";
@@ -149540,6 +149543,20 @@ function fillBoost(){
   });
   if(!body) body=`<tr><td colspan="99" style="text-align:center;color:var(--muted);padding:24px">无需要提销的 SKU</td></tr>`;
   const b=document.getElementById("boost-body"); if(b) b.innerHTML=body;
+  // 底部汇总行（与上方 hint 同一口径，随站点筛选联动）
+  const foot=document.getElementById("boost-foot");
+  if(foot){
+    const wSell = sumAvg7>0 ? (sumRem/sumAvg7).toFixed(1) : "∞";
+    foot.innerHTML=`<tr>
+      <td class="l" colspan="4">合计 ${n} 个 SKU×站点</td>
+      <td>${fmt(sumRem)}</td>
+      <td>${sumAvg7.toFixed(1)}</td>
+      <td>${wSell}</td>
+      <td style="color:var(--red)">${fmt(sumExcess)}</td>
+      <td class="l">P1 ${tierN.P1} / P2 ${tierN.P2} / P3 ${tierN.P3}</td>
+      <td class="l">UK ${fmt(ukE)} / EU ${fmt(euE)}</td>
+    </tr>`;
+  }
   const sEl=document.getElementById("boost-sum");
   if(sEl) sEl.innerHTML = `共 <b>${n}</b> 个 SKU×站点需提销，预计滞销合计 <b>${fmt(sumExcess)}</b> 件（UK ${fmt(ukE)} / EU ${fmt(euE)}）`;
 }
