@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-11-26 10:55",
+ "generated_at": "2026-11-26 10:59",
  "meta": {
   "category": "圣诞树",
   "inventory_date": "2026-11-26",
@@ -105421,22 +105421,17 @@
  ],
  "legacy": {
   "enabled": true,
-  "sku_count": 38,
-  "unique_sku": 35,
-  "init_total": 5776,
+  "sku_count": 33,
+  "unique_sku": 30,
+  "init_total": 5290,
   "sales_total": 5275,
-  "remaining": 502,
+  "remaining": 16,
   "uk_sales": 1317,
   "eu_sales": 3957,
   "sep_sales": 661,
   "oct_sales": 5275,
   "unregistered": [
    "FTSDCT-1029-UK",
-   "HOSDTR-4002-UK",
-   "HOSDTR-0012-E",
-   "FTSDCT-3007-E",
-   "HOSDTR-2017-E",
-   "HOSDTR-2007-UK",
    "FTSDCT-3004-DS",
    "FTSDCT-2020-E"
   ],
@@ -161540,56 +161535,6 @@
     "stock": 0,
     "sales": 1,
     "remaining": 0,
-    "by_platform": {},
-    "registered": false
-   },
-   {
-    "sku": "HOSDTR-4002-UK",
-    "region": "CG",
-    "init": 27,
-    "stock": 27,
-    "sales": 0,
-    "remaining": 27,
-    "by_platform": {},
-    "registered": false
-   },
-   {
-    "sku": "HOSDTR-0012-E",
-    "region": "CG",
-    "init": 96,
-    "stock": 96,
-    "sales": 0,
-    "remaining": 96,
-    "by_platform": {},
-    "registered": false
-   },
-   {
-    "sku": "FTSDCT-3007-E",
-    "region": "CG",
-    "init": 112,
-    "stock": 112,
-    "sales": 0,
-    "remaining": 112,
-    "by_platform": {},
-    "registered": false
-   },
-   {
-    "sku": "HOSDTR-2017-E",
-    "region": "CG",
-    "init": 101,
-    "stock": 101,
-    "sales": 0,
-    "remaining": 101,
-    "by_platform": {},
-    "registered": false
-   },
-   {
-    "sku": "HOSDTR-2007-UK",
-    "region": "CG",
-    "init": 150,
-    "stock": 150,
-    "sales": 0,
-    "remaining": 150,
     "by_platform": {},
     "registered": false
    },
